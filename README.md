@@ -6,3 +6,18 @@ This project demonstrate how we may draw insights from a highly unbalanced data 
 [Full report Document](assets/report.pdf)
 
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
+
+<iframe
+  src="assets/per.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+<iframe
+  src="assets/feature.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
