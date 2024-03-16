@@ -1,5 +1,12 @@
-remote_theme: pages-themes/architect@v0.2.0
+title: Homogenous Ensemble Learning in Highly Unbalanced Data
+author: Kaiwen Bian & Bella Wang
+  name: GitHub User
+  email: kbian@ucsd.edu
+
+description: >
+This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning
+
+theme: minima
 plugins:
-- jekyll-remote-theme
-title: [Homogenous Ensemble Learning in Highly Unbalanced Data]
-description: [This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning]
+  - jekyll-feed
+  - jekyll-seo-tag
