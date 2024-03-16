@@ -3,6 +3,6 @@ plugins:
 - jekyll-remote-theme
 
 title: [Homogenous Ensemble Learning in Highly Unbalanced Data]
+description: [Predictive Recipe Rating Model]
 
-github:
-  zip_url: https://github.com/KevinBian107/ensemble_unbalance_data
+<a href="https://github.com/KevinBian107/ensemble_unbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Repository</a>
