@@ -1,2 +1,1 @@
-# ensemble-unbalanced-data
-Homogenous Ensemble Learning in Highly Unbalanced Data
+# Homogenous Ensemble Learning in Highly Unbalanced Data
