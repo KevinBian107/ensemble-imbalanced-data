@@ -4,3 +4,4 @@ plugins:
 
 title: [Homogenous Ensemble Learning in Highly Unbalanced Data]
 description: [This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning]
+github: https://github.com/KevinBian107/ensemble_unbalance_data
