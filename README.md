@@ -10,6 +10,3 @@ This project demonstrate how we may draw insights from a highly unbalanced data 
 # Model
 ### Feature Importantness
 <iframe src="assets/feature.html" width="800" height="600" frameborder="0"></iframe>
-
-### Fairness of Model
-<iframe src="assets/fairness.html" width="800" height="600" frameborder="0"></iframe>
