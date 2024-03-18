@@ -10,7 +10,9 @@ In this project, we will adapt ideas of **homogenous ensemble learning** where w
 
 A **Decision Tree** essentially learns to come up with questions or decisions at an high dimensional space (depending on the number of features) and then separate the data using "boxes" or "lines" in that way. The core mechanism that allows it to happen is using *entropy minimization* where the model tries to reduce the entropy, or uncertainty of each split, making one catagory fit to one side and the other catagory to the other side.
 
-<img>
+$$
+\text{entropy} &= - \sum_C p_C \log_2 p_C
+$$
 
 A **Random Forest** essentially is when at the splitting point of data to train/test/val, **a random subset of features** is taken out instead of choosing from all of them and then spliting the tree base on this subset of the feature, usually speaking $m = sqrt(d)$ seems to work well in practice and it is also the default that `sk_learn` uses. **This allows each decision trees to come up with different prediction rules for later on voting an best one**
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
@@ -115,8 +117,7 @@ When aggregating by user, something interesting appears, it seems like that `rat
 We actually made more edas and feature engineering with **textual features**, but we will introduce those later in the section as it is much more relevant to our modeling process. For now, we will show some technique with TF-IDF that we will use later on in this project by checking the top 5 **most important** words in each of the rows (recipe_id) in the **original cleaned** data frame filtered by getting only the **5 rating recipes**(note, recipe_id is not unique here).
 - We will probably not directly use this approach here as it runs really slow! But we may use a similar approach that have a better runtime complexity!
 
-For runtime complexity, we use a picture here for the outout of the code above:
-
+This would be an example output of such textual feature analysis:
 <p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
 
 # Assessment of Missingness Mechanism
@@ -153,7 +154,9 @@ Since we want to do certain textual feature analysis for our predictive model, w
 ### Term Frequency Inverse Document Frequency
 `TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The `TF-IDF` Formula is a as follows:
 
-<p>$$\begin{align*}\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right) \end{align*}$$</p>
+$$
+\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right)
+$$
 
 We will be using `TfidfVectorizer` to help our calculation.
 
@@ -257,7 +260,9 @@ For the pipeline, we are still doing an **Homogenous Ensemble Learning** with de
 
 We balanced the dataset by using automatic balaning argumnet `"balanced"`, we have also tried to use self customized dictionaries for assigning weights, However, this wouldn't be generalizable to unseen data as the distribution of data changes. The `sk_learn` packages does automatic weight assigning by the following formula:
 
-$$n_samples / (n_classes * np.bincount(y))$$
+$$
+n_samples / (n_classes * np.bincount(y))
+$$
 
 This model pipeline takes about 50 seconds to fit
 
