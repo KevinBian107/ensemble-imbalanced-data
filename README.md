@@ -329,7 +329,7 @@ This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operatin
 
 We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the `vegan` group and the `vegetarian` group. Let's first check how many of them are in the data set.
 
-## Difference Significant?
+### Difference Significant?
 We run a **permutation test** to see if the difference in accuracy is significant.
 - **Null Hypothesis**: The classifier's accuracy is the same for both `vegan` + `vegetarian` tags and non `vegan` + `vegetarian` tags, and any differences are due to chance.
 - **Alternative Hypothesis**: The classifier's accuracy is higher for non `vegan` + `vegetarian` tags.
