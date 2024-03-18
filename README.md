@@ -21,8 +21,8 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 <p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="600"/></p>
 
 ## Content for this Project
-1. Introduction
-2. Data Cleaning, Transformation, and EDA
+1. [Introduction](#introduction)
+2. [Data Transformation and EDA](#data-transformation-and-eda)
     - Transformation
     - Univariate & Bivariate Analysis
     - Aggreagted Analysis
