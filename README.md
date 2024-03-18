@@ -23,29 +23,30 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 ## Content for this Project
 1. [Introduction](#introduction)
 2. [Data Transformation and EDA](#data-transformation-and-eda)
-    - Transformation
-    - Univariate & Bivariate Analysis
-    - Aggreagted Analysis
-    - Textual Feature Analysis
-3. Assessment of Missingness Mechanism
-    - MAR Anlaysis
-    - NMAR Analysis
-4. Permutation Testing of TF-IDF
-5. Framing a Predictive Question
-6. Baseline Model: An Naive Approach
-    - Handling Missingness in Data
-    - Train/Val/Test Split
-    - Feature Engineering
-7. Final Model: Homogenous Ensemble Learning
-    - Feature Engineering (Back to EDA)
-    - Model Pipeline
-    - Hyperparameter Tuning
-    - Evaluation
-        - Feature Importantness
-        - Confusion Matrix, Evaluation Metrics, and ROC_AUC
-8. Fairness Analysis
+    - [Merging & Transformation](#merging--transformation)
+    - [Univariate & Bivariate Analysis](#univariate--bivariate-analysis)
+    - [Aggreagted Analysis](#aggreagted-analysis)
+    - [Textual Feature Analysis](#textual-feature-analysis)
+3. [Assessment of Missingness Mechanism](#assessment-of-missingness-mechanism)
+    - [MAR Anlaysis](#mar-anlaysis)
+    - [NMAR Analysis](#nmar-analysis)
+4. [Permutation Testing of TF-IDF](#permutation-using-tf-idf)
+5. [Framing a Predictive Question](#framing-a-predictive-question)
+6. [Baseline Model: An Naive Approach](#baseline-model-an-naive-approach)
+    - [Handling Missingness in Data](#handling-missing-data)
+    - [Train/Val/Test Split](#trainvalidatetest-split)
+    - [Feature Engineering](#feature-engineering)
+7. [Final Model: Homogenous Ensemble Learning](#final-model-ensemble-learning)
+    - [Feature Engineering: Back to EDA)](#feature-engineering-back-to-eda)
+    - [Model Pipeline](#model-pipeline)
+    - [Hyperparameter Tuning](#hyperparameter-tuning)
+    - [Model Evaluation](#model-evaluation)
+        - [Feature Importantness](#feature-importantness)
+        - [Confusion Matrix, Evaluation Metrics, and ROC_AUC](#confusion-matrix-evaluation-metrics-and-roc_auc)
+8. [Fairness Analysis](#fairness-analysis)
 
 # Data Transformation and EDA
+[Back to Catalog](#content-for-this-project)
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 1. Left merge the recipes and interactions datasets together.
@@ -121,6 +122,8 @@ This would be an example output of such textual feature analysis:
 <p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
 
 # Assessment of Missingness Mechanism
+[Back to Catalog](#content-for-this-project)
+
 We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset
 
 <img>
@@ -146,6 +149,8 @@ Now we want to perform permutation testing with each of the continuous variable 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories` or `n_steps`.
 
 # Permutation using TF-IDF
+[Back to Catalog](#content-for-this-project)
+
 For this section, we will be working with the same data frame that was used in the missingness mechanism section, so a data frame that is grouped by `recipe_id`.
 
 Since we want to do certain textual feature analysis for our predictive model, we were wondering whether `TF-IDF` of the `description` columns would actually play a role in deternmining the `rating` of an recipe. This can be deemed as a mini-warmup for our modeling procedure later on.
@@ -184,11 +189,14 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 The result is significant! **We reject the null hypothesis! There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.**
 
 # Framing a Predictive Question
+[Back to Catalog](#content-for-this-project)
+
 From the previous section we have learned that Recipe's `Max TF-IDF` distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to **reconmander system**
 
 Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
 
 # Baseline Model: An Naive Approach
+[Back to Catalog](#content-for-this-project)
 
 <img>
 
@@ -224,9 +232,11 @@ The pipeline for the model is constituted with a simple **Random Forest** multi-
 Turns out the original dataset is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
 
 # Final Model: Ensemble Learning
+[Back to Catalog](#content-for-this-project)
+
 Now with the previous baseline model's problem in mind, let's make some actual useful feature engineering, mainly we will be utilizing these features:
 
-## Feature Engineering (Back to EDA)
+## Feature Engineering: Back to EDA
 The previous features are carried over to this model, which includes:
 1. binarized `n_step` with threshold 25, this is a result from eda
 2. binarized `n_ingredients` with threshold 20, this is a result from eda
@@ -273,6 +283,8 @@ This model pipeline takes about 50 seconds to fit
 <img>
 
 # Model Evaluation
+[Back to Catalog](#content-for-this-project)
+
 We will be conducting some simple evaluation with the model in this section with confusion matrix just to see the basic performance of the model. A more detaile  performance evaluation would be conducted in the **Test Data Evaluation** section. To really understand what we are evaluating, we need to first understand what metrics matters to us:
 
 Example:
@@ -313,6 +325,8 @@ This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operatin
 <p align="center"><img src="assets/roc.png" alt="tfidf" width="300"/></p>
 
 # Fairness Analysis
+[Back to Catalog](#content-for-this-project)
+
 We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the `vegan` group and the `vegetarian` group. Let's first check how many of them are in the data set.
 
 ## Difference Significant?
