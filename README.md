@@ -16,7 +16,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<center><img src="imgs/rfc.png" width=35%></center>
+<center><img src="assets/rfc.png" width=35%></center>
 
 [Full report Document](assets/report.pdf)
 
