@@ -16,12 +16,12 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-
-![rfc]("assets/rfc.png" width=35%>)
+<p align="center">
+  <img src="assets/rfc.png" alt="random forest classifier" width="400"/>
+</p>
 
 ### Feature Importantness
 <iframe src="assets/feature.html" width="800" height="600" frameborder="0"></iframe>
-
 
 [Full report Document](assets/report.pdf)
 
