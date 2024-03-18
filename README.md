@@ -149,15 +149,15 @@ For this section, we will be working with the same data frame that was used in t
 
 Since we want to do certain textual feature analysis for our predictive model, we were wondering whether `TF-IDF` of the `description` columns would actually play a role in deternmining the `rating` of an recipe. This can be deemed as a mini-warmup for our modeling procedure later on.
 
-## Term Frequency Inverse Document Frequency
+## Intro to TF-IDF
+### Term Frequency Inverse Document Frequency
 `TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The `TF-IDF` Formula is a as follows:
 
-$$
-\begin{align*}\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right) \end{align*} $$
+<p>$$\begin{align*}\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right) \end{align*}$$</p>
 
 We will be using `TfidfVectorizer` to help our calculation.
 
-## Differences in Max for TF-IDF
+### Differences in Max for TF-IDF
 We want to see whether the distibution of `high_rated` recipes and the distribution of `low_rated` recipes actually come from the same distribution. Thus, we will be performing a **permutation test** here with the following hypothesis:
 - **Null hypothesis**: There **are no** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
 - **Alternative hypothesis**: There **are** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
@@ -174,7 +174,7 @@ With all these considerations, we pick our test statistics to be **differences i
 
 This section provide a **solid prove** of why we are using TF-IDF as a feature for our predictive model!
 
-## Permutation Testing
+## Conducting Permutation Testing
 
 <img>
 
@@ -195,9 +195,7 @@ Notice that in here we did create a extra feature of `is_low` and `is_good`, whi
 1. It have been shwon earlier that the missingness of the `rating` columns seems to be **NMAR**, so it is not dependent on the column but rather depending on itself. Thus, the naive approach taht we will be imputing the ratings through **random imputation**. However, because of the high imbalance nature of the data set, this may cause more `rating` of 5 to come up.
     - Regarding this issue, we ran the model on both imupting randomly and also on dropping the missing data directly for the `rating` column (second choise make sure that the target column is not randomly imputed, this may cause error)
     - After experimentation, drpping the missing `rating` directly results in both a training/validation and testing accuracy
-
 2. For the missingness in `description`, we make sure that the distribution of the data is the same by not dropping it but rather imputing it with simple white space. It is true that the    `description` column missgness is MAR, but it would be quite difficult to try to impute it, so we pick an naive solution in this project
-
 3. For missingness in `name`, because it is MCAR, we drop it directly.
 
 ## Train/Validate/Test Split
@@ -208,10 +206,6 @@ We are splitting the main data set into 3 components of `train`, `validate`, and
 - Train: 56.25%
 
 ## Feature Engineering
-
-<img>
-
-## Baseline Model's Pipeline
 In the basic model pipeline we are working with not a great number of features:
 1. binarized `n_step` with threshold 25
 2. binarized `n_ingredients` with threshold 20
@@ -219,15 +213,17 @@ In the basic model pipeline we are working with not a great number of features:
 4. normalized `minutes` with respects to binarized `n_ingredients` using the customized class as above
 5. simple counts of `tags` column
 
+## Baseline Model's Pipeline
 The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with hyperparameter tuned
 
 <img>
 
 Turns out the original dataset is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
 
-# Final Model: Homogenous Ensemble Learning
+# Final Model: Ensemble Learning
 Now with the previous baseline model's problem in mind, let's make some actual useful feature engineering, mainly we will be utilizing these features:
 
+## Feature Engineering (Back to EDA)
 The previous features are carried over to this model, which includes:
 1. binarized `n_step` with threshold 25, this is a result from eda
 2. binarized `n_ingredients` with threshold 20, this is a result from eda
@@ -254,10 +250,6 @@ In addition, awe also added afew more features to capture the relationship we sa
 5. Analyzing whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function
 6. We have taken out irrelevant features such as the `naive_bayes` encoder taht we have implemented
 
-## Feature Engineering (Back to EDA)
-
-<img>
-
 ## Model Pipeline
 Since this is a **multi-class classifictaion** problem and the data is also highly **imbalanced**, we are also adding a **dummy** classifier that classifies uniformally at random to bench mark our modle's performances. Of course, we will also use different evaluation metrics later to demonstarte the model's performances as well, the dummy classfier is just an "easy to view" example.
 
@@ -265,7 +257,7 @@ For the pipeline, we are still doing an **Homogenous Ensemble Learning** with de
 
 We balanced the dataset by using automatic balaning argumnet `"balanced"`, we have also tried to use self customized dictionaries for assigning weights, However, this wouldn't be generalizable to unseen data as the distribution of data changes. The `sk_learn` packages does automatic weight assigning by the following formula:
 
-$n_samples / (n_classes * np.bincount(y))$
+$$n_samples / (n_classes * np.bincount(y))$$
 
 This model pipeline takes about 50 seconds to fit
 
@@ -329,5 +321,5 @@ We run a **permutation test** to see if the difference in accuracy is significan
 
 This result is **significant**, we reject the null hypothesis!
 
-### More Questions?
+## More Questions?
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
