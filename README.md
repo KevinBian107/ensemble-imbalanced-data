@@ -14,9 +14,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<p align="center">
-  <img src="assets/rfc.png" alt="random forest classifier" width="600"/>
-</p>
+<p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="600"/></p>
 
 ## Content for this Project
 1. Introduction
@@ -43,7 +41,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
         - Confusion Matrix, Evaluation Metrics, and ROC_AUC
 8. Fairness Analysis
 
-# Data Cleaning, Transformation, and EDA
+# Data Transformation and EDA
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 1. Left merge the recipes and interactions datasets together.
@@ -116,7 +114,7 @@ We actually made more edas and feature engineering with **textual features**, bu
 - We will probably not directly use this approach here as it runs really slow! But we may use a similar approach that have a better runtime complexity!
 
 For runtime complexity, we use a picture here for the outout of the code above:
-<center><img src="imgs/tfidf.png" width=35%></center>
+<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="600"/></p>
 
 # Assessment of Missingness Mechanism
 We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset
@@ -137,9 +135,7 @@ img
 `description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results).
 
 ### Permutation Testing Using K-S Statistics
-Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution.
-
-We decide to use a testing threshold of $p=0.05$
+Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of $p=0.05$
 
 img
 
@@ -304,8 +300,7 @@ Clearly, there is a difference in the recall and f1 score. There isn't that big 
 Next, we want to also look at the `ROC_AUC` score or **area under the receiver operating characteristic curve**. Again, like many metrics, they are originally designed for binary classfications, but we can also apply to multi-class classfications by doing `ovr` strategy (estimating by making grouped for comparison).
 
 This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
-
-<center><img src="imgs/roc.png" width=35%></center>
+<p align="center"><img src="assets/roc.png" alt="tfidf" width="600"/></p>
 
 # Fairness Analysis
 We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the `vegan` group and the `vegetarian` group. Let's first check how many of them are in the data set.
@@ -319,8 +314,7 @@ We run a **permutation test** to see if the difference in accuracy is significan
 
 img
 
-The result is **significant**, we reject the null hypothesis!
-
+This result is **significant**, we reject the null hypothesis!
 
 # More Questions?
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
