@@ -121,10 +121,10 @@ We actually made more edas and feature engineering with **textual features**, bu
 This would be an example output of such textual feature analysis:
 <p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
 
-# Assessment of Missingness Mechanism
+# Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
 
-We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset
+We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset.
 
 <img>
 
