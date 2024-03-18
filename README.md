@@ -9,7 +9,9 @@ In this project, we will adapt ideas of **homogenous ensemble learning** where w
 A **Decision Tree** essentially learns to come up with questions or decisions at an high dimensional space (depending on the number of features) and then separate the data using "boxes" or "lines" in that way. The core mechanism that allows it to happen is using *entropy minimization* where the model tries to reduce the entropy, or uncertainty of each split, making one catagory fit to one side and the other catagory to the other side.
 
 <center>
+
 $$\text{entropy} &= - \sum_C p_C \log_2 p_C$$
+
 </center>
 
 A **Random Forest** essentially is when at the splitting point of data to train/test/val, **a random subset of features** is taken out instead of choosing from all of them and then spliting the tree base on this subset of the feature, usually speaking $m = sqrt(d)$ seems to work well in practice and it is also the default that `sk_learn` uses. **This allows each decision trees to come up with different prediction rules for later on voting an best one**
@@ -17,11 +19,11 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
 <p align="center">
-  <img src="assets/rfc.png" alt="random forest classifier" width="400"/>
+  <img src="assets/rfc.png" alt="random forest classifier" width="500"/>
 </p>
 
 ### Feature Importantness
-<iframe src="assets/feature.html" width="800" height="600" frameborder="0"></iframe>
+<iframe src="assets/feature.html" width="500" frameborder="0"></iframe>
 
 [Full report Document](assets/report.pdf)
 
