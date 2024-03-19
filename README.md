@@ -48,7 +48,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<p><img src="assets/rfc.png" alt="random forest classifier" width="700"/></p>
+<p><img src="assets/rfc.png" alt="random forest classifier" width="500"/></p>
 
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
@@ -121,13 +121,13 @@ After the transformation, we have types of each of the columns as the following:
 
 We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the **developer repository** or **full report** for more):
 
-|    | name                                 |   minutes |   contributor_id | recipe_date         |   sodium |   protein | tags                                                                                                                                                                                                                        |
-|---:|:-------------------------------------|----------:|-----------------:|:--------------------|---------:|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  0 | 1 brownies in the world    best ever |        40 |           985201 | 2008-10-27 00:00:00 |        3 |         3 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] |
-|  1 | 1 in canada chocolate chip cookies   |        45 |          1848091 | 2011-04-11 00:00:00 |       22 |        13 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                               |
-|  2 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
-|  3 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
-|  4 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+| name                                 |   minutes |   contributor_id |   sodium |   protein | tags                                                                                                                                                                                                                        |
+|:-------------------------------------|----------:|-----------------:|---------:|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 brownies in the world    best ever |        40 |           985201 |        3 |         3 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] |
+| 1 in canada chocolate chip cookies   |        45 |          1848091 |       22 |        13 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                               |
+| 412 broccoli casserole               |        40 |            50969 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+| 412 broccoli casserole               |        40 |            50969 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+| 412 broccoli casserole               |        40 |            50969 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
 
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
@@ -210,7 +210,7 @@ This would be an example output of such textual feature analysis:
 
 We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset. First we can check what is actually missing in the data set.
 
-|             |    0 |
+|             | missing |
 |:------------|-----:|
 | avg_rating  | 1679 |
 | rating      | 1679 |
@@ -450,7 +450,29 @@ The dummy classifier's accuracy is about `0.1974964208362395`.
 
 However, **accuracy** doesn't tell everything, we can look at a few more metrics and isolated for each rating from 1 to 5 to get a better understanding of our model performances.
 
-<img>
+For our model:
+
+|    |   precision |   recall |   f1_score |   count |
+|---:|------------:|---------:|-----------:|--------:|
+|  1 |   0.268657  | 0.10181  |  0.147662  |     884 |
+|  2 |   0.0526316 | 0.132231 |  0.0752941 |     121 |
+|  3 |   0.278384  | 0.295824 |  0.286839  |     862 |
+|  4 |   0.135423  | 0.402985 |  0.202722  |    1608 |
+|  5 |   0.918568  | 0.807835 |  0.85965   |   23766 |
+
+<br>
+
+For the dummy model:
+
+|    |   precision |    recall |   f1_score |   count |
+|---:|------------:|----------:|-----------:|--------:|
+|  1 |    0.18209  | 0.0114104 |  0.0214751 |    5346 |
+|  2 |    0.1875   | 0.0103787 |  0.0196687 |    5492 |
+|  3 |    0.19214  | 0.0325203 |  0.0556258 |    5412 |
+|  4 |    0.203553 | 0.17888   |  0.19042   |    5445 |
+|  5 |    0.20334  | 0.766318  |  0.321398  |    5546 |
+
+
 
 ### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
