@@ -1,3 +1,4 @@
+# Introduction
 Author: Kaiwen Bian & Bella Wang
 
 [Full Report Document](assets/report.pdf)
@@ -155,7 +156,7 @@ Since we want to do certain textual feature analysis for our predictive model, w
 ### Term Frequency Inverse Document Frequency
 `TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The TF-IDF Formula is a as follows:
 
-<p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="300"/></p>
+<p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="600"/></p>
 
 We will be using `TfidfVectorizer` to help our calculation.
 
