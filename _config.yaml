@@ -1,11 +1,14 @@
+title: Homogenous Ensemble Learning in Highly Imbalanced Data
+description: Predictive Model on Recipe Data
+
 theme: minima
 remote_theme: jekyll/minima
 
 plugins:
 - jekyll-remote-theme
 
-minima:
-  skin: auto
+header_pages:
+  - about.md
 
-title: Homogenous Ensemble Learning in Highly Imbalanced Data
-description: Predictive Model on Recipe Data
+minima:
+  skin: dark
