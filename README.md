@@ -51,16 +51,16 @@ We can first look at the data frame that we will be working with in this project
 This is the `rcipe` data frame:
 <iframe
   src="assets/recipe.html"
-  width="800"
-  height="600"
+  width="300"
+  height="200"
   frameborder="0"
 ></iframe>
 
 This is the `interaction` data frame:
 <iframe
   src="assets/interactions.html"
-  width="800"
-  height="600"
+  width="300"
+  height="200"
   frameborder="0"
 ></iframe>
 
