@@ -51,20 +51,8 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` raw data frame:
-<iframe
-  src="assets/recipe.html"
-  width="350"
-  height="350"
-  frameborder="0"
-></iframe>
 
 This is the `interaction` raw data frame:
-<iframe
-  src="assets/interactions.html"
-  width="350"
-  height="350"
-  frameborder="0"
-></iframe>
 
 These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`. The next section would go more in depth into the transformation on each of the column to prepare for the modeling phase.
 
