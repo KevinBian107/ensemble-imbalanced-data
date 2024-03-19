@@ -45,11 +45,10 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 8. [Fairness Analysis](#fairness-analysis)
 
 # Data Transformation and EDA
-[Back to Catalog](#content-for-this-project)
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 1. Left merge the recipes and interactions datasets together.
-2. In the merged dataset, we also filled all ratings of 0 with `np.NaN` as `rating` of zero doesn't make sense, we will be evaluating this in the `missingness mechanism` section.
+2. In the merged dataset, we also filled all ratings of 0 with np.NaN as `rating` of zero doesn't make sense, we will be evaluating this in the missingness mechanism section.
 3. We then find the average rating per recipe (as a series) and add this series containing the average rating per recipe back to the recipes dataset.
 
 We also performed a series of follow up transformations to fit our needs for the data set as follows:
@@ -133,7 +132,7 @@ However, on the other hand, the `rating` column seems to be **Not Missing At Ran
 One interesting one to analyze is `description`, because it is hard to say directly how it may be correlated to any other columns in this data set, we suspect it to be **MAR**, but we will prove it to be **MAR** in the next section.
 
 ## MAR Anlaysis
-### Decision Rule for `description`
+### Decision Rule for Missing Description
 Let's assume that the missingess of `description` column is related to the `col` column for **continuous** columns, wouldn't depend on **discrete** columns.
 
 <img>
@@ -152,11 +151,11 @@ From what the plot have suggest, it seems like missingess for `description` is r
 
 For this section, we will be working with the same data frame that was used in the missingness mechanism section, so a data frame that is grouped by `recipe_id`.
 
-Since we want to do certain textual feature analysis for our predictive model, we were wondering whether `TF-IDF` of the `description` columns would actually play a role in deternmining the `rating` of an recipe. This can be deemed as a mini-warmup for our modeling procedure later on.
+Since we want to do certain textual feature analysis for our predictive model, we were wondering whether TF-IDF of the `description` columns would actually play a role in deternmining the `rating` of an recipe. This can be deemed as a mini-warmup for our modeling procedure later on.
 
 ## Intro to TF-IDF
 ### Term Frequency Inverse Document Frequency
-`TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The `TF-IDF` Formula is a as follows:
+`TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The TF-IDF Formula is a as follows:
 
 <p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="300"/></p>
 
@@ -166,8 +165,7 @@ We will be using `TfidfVectorizer` to help our calculation.
 We want to see whether the distibution of `high_rated` recipes and the distribution of `low_rated` recipes actually come from the same distribution. Thus, we will be performing a **permutation test** here with the following hypothesis:
 - **Null hypothesis**: There **are no** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
 - **Alternative hypothesis**: There **are** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
-
-We decide to use a testing threshold of $p=0.05$
+- We decide to use a testing threshold of p=0.05
 
 As for the **test statistics**, we actually have many options, but they all circles around the **differences** of something:
 - Using `sum` -> longer sentences have greater sum
@@ -188,7 +186,7 @@ The result is significant! **We reject the null hypothesis! There is a differenc
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
 
-From the previous section we have learned that Recipe's `Max TF-IDF` distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to **reconmander system**
+From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to **reconmander system**
 
 Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
 
@@ -243,29 +241,29 @@ The previous features are carried over to this model, which includes:
 
 In addition, awe also added afew more features to capture the relationship we saw from EDA, whcih includes:
 1. Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`
-2. Two `TF-IDF` that have been `one hot encoded`:
-    - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using `argmax`, representing the most important words in a sentence (we are using `argmax` here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF)
+2. Two TF-IDF that have been one hot encoded:
+    - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF)
     - We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
     - Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words
     - We perform such operations with both the `name` column and also the `description` column
     - **Remark**: this feature improved the final model by roughly 10% accuracy, this is the `detect_key_low(df)` function
         - We ahve also tried to trade off some complexity with better accuracy by using the count of the 5 top TF-IDF words in each row (just this function runs for about 3m)
-        - However, the performance didn't perform as well as `argmax`, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word)
-3. The `recipe_dtae` column have also being taken out with only the year of the recipe and then `one hot encoded` as well.
-4. At last, we also used the `tag` column of each of the sentence to perform `one hot encoding`
-    - We first performed `one hot encoding` to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**
-    - Thus we `filtered` out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features
-    - At last, we conducted `pca` to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
+        - However, the performance didn't perform as well as argmax, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word)
+3. The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well.
+4. At last, we also used the `tag` column of each of the sentence to perform one hot encoding
+    - We first performed one hot encoding to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**
+    - Thus we filtered out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features
+    - At last, we conducted pca to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
     - The `tag_ohe_pca(df)` function takes care of this step
 5. Analyzing whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function
-6. We have taken out irrelevant features such as the `naive_bayes` encoder taht we have implemented
+6. We have taken out irrelevant features such as the naive_bayes encoder taht we have implemented
 
 ## Model Pipeline
 Since this is a **multi-class classifictaion** problem and the data is also highly **imbalanced**, we are also adding a **dummy** classifier that classifies uniformally at random to bench mark our modle's performances. Of course, we will also use different evaluation metrics later to demonstarte the model's performances as well, the dummy classfier is just an "easy to view" example.
 
 For the pipeline, we are still doing an **Homogenous Ensemble Learning** with decision tree as it have being shown to perform the best experimentally (we have tried hetergenous ensemble learning using voting/stacking with models such as SVM and logistic regression, but none of the perform as well as the simple random forest).
 
-We balanced the dataset by using automatic balaning argumnet `"balanced"`, we have also tried to use self customized dictionaries for assigning weights, However, this wouldn't be generalizable to unseen data as the distribution of data changes. The `sk_learn` packages does automatic weight assigning by the following formula:
+We balanced the dataset by using automatic balaning argumnet "balanced", we have also tried to use self customized dictionaries for assigning weights, However, this wouldn't be generalizable to unseen data as the distribution of data changes. The `sk_learn` packages does automatic weight assigning by the following formula:
 
 <p align="center"><img src="assets/eq3.png" alt="random forest classifier" width="300"/></p>
 
@@ -289,7 +287,7 @@ Example:
 We care about getting a correct rating for reconmandation, we care about finding **Recall** but still considering precision, accuracy, F1 scores.
 
 ### Feature Importantness
-We have 60 features in our model with feature 0 and feature 1 having the most effect! these are the 2 argmax `TF-IDF` encoder that we have implemented, this is consistent with ou previous **permutation testing** that shows the `TF-IDF` distribution for `high_rated` and `low_rated` recipes are different distributions.
+We have 60 features in our model with feature 0 and feature 1 having the most effect! these are the 2 argmax TF-IDF encoder that we have implemented, this is consistent with ou previous **permutation testing** that shows the TF-IDF distribution for high_rated and low_rated recipes are different distributions.
 
 Other than that, the second highest feature importantness is teh forth feature to the 11th feature and 22th feature to 31th feature. These correspond to the `tag_pca` column!
 
@@ -303,7 +301,7 @@ Let's formalize the test result by using the `classification_report` function fr
 
 <img>
 
-After the `weighted_avg` evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
+After the weighted_avg evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
 
 <img>
 
@@ -322,12 +320,12 @@ This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operatin
 # Fairness Analysis
 [Back to Catalog](#content-for-this-project)
 
-We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the `vegan` group and the `vegetarian` group. Let's first check how many of them are in the data set.
+We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the vegan group and the vegetarian group. Let's first check how many of them are in the data set.
 
 ### Difference Significant?
 We run a **permutation test** to see if the difference in accuracy is significant.
-- **Null Hypothesis**: The classifier's accuracy is the same for both `vegan` + `vegetarian` tags and non `vegan` + `vegetarian` tags, and any differences are due to chance.
-- **Alternative Hypothesis**: The classifier's accuracy is higher for non `vegan` + `vegetarian` tags.
+- **Null Hypothesis**: The classifier's accuracy is the same for both vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
+- **Alternative Hypothesis**: The classifier's accuracy is higher for non vegan + vegetarian tags.
 - Test statistic: Difference in accuracy (is_in minus not_in).
 - Significance level: 0.05
 
