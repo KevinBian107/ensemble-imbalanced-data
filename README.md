@@ -68,6 +68,8 @@ This is the `rcipe` raw data frame:
 | 'steps'        | Text for recipe steps, in order                                                                      |
 | 'description'  | User-provided description                                                                            |
 
+<br>
+
 This is the `interaction` raw data frame:
 
 | Column      | Description         |
@@ -77,6 +79,8 @@ This is the `interaction` raw data frame:
 | 'date'      | Date of interaction |
 | 'rating'    | Rating given        |
 | 'review'    | Review text         |
+
+<br>
 
 These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`. The next section would go more in depth into the transformation on each of the column to prepare for the modeling phase.
 
@@ -423,9 +427,16 @@ In this section, we can look at the evaluation metrics for the model that we bui
 This the confusion matric for our model
 <p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="500"/></p>
 
+Our model's **accuracy** is roughly `0.7427407217062516`.
+
 This is the confusion matric for the dummy model
 <p align="center"><img src="assets/evaluation2.svg" alt="eval1" width="500"/></p>
 
+The dummy classifier's accuracy is about `0.1974964208362395`.
+
+However, **accuracy** doesn't tell everything, we can look at a few more metrics and isolated for each rating from 1 to 5 to get a better understanding of our model performances.
+
+<img>
 
 ### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
@@ -448,6 +459,8 @@ Let's formalize the test result by using the `classification_report` function fr
 | macro avg|    0.33   |  0.33  |   0.31   | 36321   |
 | weighted avg| 0.70   |  0.73  |   0.70   | 36321   |
 
+<br>
+
 After the weighted_avg evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
 
 |    | precision | recall | f1-score | support |
@@ -461,6 +474,8 @@ After the weighted_avg evaluation, it looks like our model achieves a pretty goo
 | accuracy |            |        |   0.20   | 36321   |
 | macro avg|    0.20   |  0.21  |   0.12   | 36321   |
 | weighted avg| 0.63   |  0.20  |   0.28   | 36321   |
+
+<br>
 
 Clearly, there is a difference in the recall and f1 score. There isn't that big of a differences in precision for the weighted avg because the number of 5 rating are plenty in the data set (77%), causing the precision for 5 to reach 77% directly.
 
