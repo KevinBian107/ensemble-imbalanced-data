@@ -2,5 +2,13 @@ theme: minima
 plugins:
 - jekyll-remote-theme
 
+header_pages:
+  - about.md
+  - portfolio.md
+
 title: Homogenous Ensemble Learning in Highly Imbalanced Data
 description: Predictive Model on Recipe Data
+
+author:
+  name: Kaiwen Bian
+  email: kbian@gmail.com
