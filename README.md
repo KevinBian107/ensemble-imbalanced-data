@@ -63,7 +63,7 @@ This is the `rcipe` raw data frame:
 | 'contributor_id' | User ID who submitted this recipe                                                                 |
 | 'submitted'    | Date recipe was submitted                                                                           |
 | 'tags'         | Food.com tags for recipe                                                                             |
-| 'nutrition'    | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value” |
+| 'nutrition'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)|
 | 'n_steps'      | Number of steps in recipe                                                                            |
 | 'steps'        | Text for recipe steps, in order                                                                      |
 | 'description'  | User-provided description                                                                            |
@@ -118,6 +118,16 @@ After the transformation, we have types of each of the columns as the following:
     - quantitative mathamatical operations allowed (**quantitative continuous**)
 5. `Timestamp`: [recipe_date, review_date]
     - quantitative mathamatical operations allowed (**quantitative continuous**)
+
+We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the **developer repository** or **full report** for more):
+
+|    | name                                 |   minutes |   contributor_id | recipe_date         |   sodium |   protein | tags                                                                                                                                                                                                                        |
+|---:|:-------------------------------------|----------:|-----------------:|:--------------------|---------:|----------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  0 | 1 brownies in the world    best ever |        40 |           985201 | 2008-10-27 00:00:00 |        3 |         3 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] |
+|  1 | 1 in canada chocolate chip cookies   |        45 |          1848091 | 2011-04-11 00:00:00 |       22 |        13 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                               |
+|  2 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+|  3 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+|  4 | 412 broccoli casserole               |        40 |            50969 | 2008-05-30 00:00:00 |       32 |        22 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
 
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
@@ -198,9 +208,13 @@ This would be an example output of such textual feature analysis:
 # Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
 
-We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset.
+We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset. First we can check what is actually missing in the data set.
 
-<img>
+|             |    0 |
+|:------------|-----:|
+| avg_rating  | 1679 |
+| rating      | 1679 |
+| description |   48 |
 
 ## NMAR Analysis
 However, on the other hand, the `rating` column seems to be **Not Missing At Random (NMAR)** becuase from what the website is showing, some people just didn't give rating, so the rating itself doesn't exist during the data collection process, so it makes sense for it to be null. We manually added `np.NaN` into the data set where previously it was filled a zero in the data set. Since `avg_ratng` is calculated from using the `rating` column, `avg_rating` would then be **Missing At Random (MAR)** dependent on `rating`.
