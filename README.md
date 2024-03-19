@@ -202,8 +202,20 @@ When aggregating by user, something interesting appears, it seems like that `rat
 We actually made more edas and feature engineering with **textual features**, but we will introduce those later in the section as it is much more relevant to our modeling process. For now, we will show some technique with TF-IDF that we will use later on in this project by checking the top 5 **most important** words in each of the rows (recipe_id) in the **original cleaned** data frame filtered by getting only the **5 rating recipes**(note, recipe_id is not unique here).
 - We will probably not directly use this approach here as it runs really slow! But we may use a similar approach that have a better runtime complexity!
 
-This would be an example output of such textual feature analysis:
-<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
+This would be an example output of such textual feature analysis (randomly sample 10 rows):
+
+|   recipe_id | 0                                                  |
+|------------:|:---------------------------------------------------|
+|      318280 | else, library, tries, return, names                |
+|      420289 | eatingwel, recipe, by, about, com                  |
+|      456743 | allrecipes, poultry, condiment, pepper, argentine  |
+|      314304 | leaving, demonstration, highschool, messed, speech |
+|      503630 | sausage, cajun, thyme, accent, dose                |
+|      407747 | splenda, iced, sweetener, stronger, use            |
+|      442394 | owned, wall, survive, rationally, family           |
+|      284700 | difference, told, lady, elderly, francesca         |
+|      358644 | larger, portions, wonder, 21, day                  |
+|      407502 | wings, bobby, his, buffalo, cerza                  |
 
 # Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
