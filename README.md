@@ -30,6 +30,10 @@ Author: Kaiwen Bian & Bella Wang
 # Introduction
 This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a reconmander system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
 
+With the basics from this project:
+1. We can build reconmander systems that can reconmand better recipes to users to better fit their needs and appetite.
+2. Understand an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
+
 ## Random Forest Algorithm
 In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
 
@@ -42,6 +46,8 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
 <p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="600"/></p>
+
+## Data Frame Description
 
 # Data Transformation and EDA
 ## Merging & Transformation
@@ -76,7 +82,7 @@ After the transformation, we have types of each of the columns as the following:
     - quantitative mathamatical operations allowed (**quantitative continuous**)
 
 ## Univariate & Bivariate Analysis
-We will be performing **Explorative Data Analysis** for our data set:
+We will be performing some **Explorative Data Analysis** on our `recipe` data set:
 
 <img>
 
