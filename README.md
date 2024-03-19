@@ -51,6 +51,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` data frame:
+
 | Column          | Description                                                                                      |
 |-----------------|--------------------------------------------------------------------------------------------------|
 | `name`          | Recipe name                                                                                      |
@@ -59,12 +60,13 @@ This is the `rcipe` data frame:
 | `contributor_id`| User ID who submitted this recipe                                                                |
 | `submitted`     | Date recipe was submitted                                                                        |
 | `tags`          | Food.com tags for recipe                                                                         |
-| `nutrition`     | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), ... |
+| `nutrition`     | Nutrition information in the form calories (#), total fat (PDV), sugar (PDV), sodium (PDV), ... |
 | `n_steps`       | Number of steps in recipe                                                                        |
 | `steps`         | Text for recipe steps, in order                                                                  |
 | `description`   | User-provided description                                                                         |
 
 This is the `interaction` data frame
+
 | Column     | Description         |
 |------------|---------------------|
 | `user_id`  | User ID             |
