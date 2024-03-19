@@ -50,7 +50,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
 
-This is the `rcipe` data frame:
+This is the `rcipe` raw data frame:
 <iframe
   src="assets/recipe.html"
   width="350"
@@ -58,7 +58,7 @@ This is the `rcipe` data frame:
   frameborder="0"
 ></iframe>
 
-This is the `interaction` data frame:
+This is the `interaction` raw data frame:
 <iframe
   src="assets/interactions.html"
   width="350"
