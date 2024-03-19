@@ -1,6 +1,6 @@
 Author: Kaiwen Bian & Bella Wang
 
-# Catalog for this Project
+# Content for this Project
 1. [Introduction](#introduction)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
     - [Merging & Transformation](#merging--transformation)
@@ -341,23 +341,23 @@ Next, we want to also look at the `ROC_AUC` score or **area under the receiver o
 
 This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
 
-<p align="center"><img src="assets/roc.png" alt="tfidf" width="300"/></p>
+<p align="center"><img src="assets/roc.png" alt="tfidf" width="350"/></p>
 
 # Fairness Analysis
 [Back to Catalog](#content-for-this-project)
 
-We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the vegan group and the vegetarian group. Let's first check how many of them are in the data set.
+We have a pretty good model so now we want to evaluate whether our model is **fair** for treating **all populations**. In particular, we want to check in the scope of looking at the predictions for the vegan group and the vegetarian group. Let's first check how many of them are in the data set.
 
 ### Difference Significant?
 We run a permutation test to see if the difference in accuracy is significant.
 - **Null Hypothesis**: The classifier's accuracy **is the same** for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
 - **Alternative Hypothesis**: The classifier's accuracy **is higher** for `recipes` with non vegan + vegetarian tags.
 - Test statistic: Difference in accuracy (is_in - not_in)
-- Significance level: 0.05
+- Significance level: p value of 0.05
 
 <img>
 
-This result is **significant**, we reject the null hypothesis!
+This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis!
 
 ## More Questions?
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
