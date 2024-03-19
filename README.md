@@ -119,7 +119,7 @@ After the transformation, we have types of each of the columns as the following:
 5. `Timestamp`: [recipe_date, review_date]
     - quantitative mathamatical operations allowed (**quantitative continuous**)
 
-We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the **developer repository** or **full report** for more):
+We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the [developer repository](https://github.com/KevinBian107/ensemble_imbalance_data) or [full report](assets/report.pdf) for more):
 
 | name                                 |   minutes |   contributor_id |   sodium |   protein | tags                                                                                                                                                                                                                        |
 |--------------------------------------|-----------|------------------|----------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -216,6 +216,13 @@ This would be an example output of such textual feature analysis (randomly sampl
 |      284700 | difference, told, lady, elderly, francesca         |
 |      358644 | larger, portions, wonder, 21, day                  |
 |      407502 | wings, bobby, his, buffalo, cerza                  |
+
+<br>
+
+As illustrated above, this textual feature analysis does capture some noises as some words in this table doesn't seem to be that relevant from a common sense perspective, this is also why in later section when we are working with textual features, instead of using the top 5 words from a recipe, we use the top tfidf word for a recipe
+1. Runtime complexity is much better
+2. Captures relatively less noises
+In practice, our approach seem to work pretty well as illustrated in the [feature importantce section](#feature-importantness)
 
 # Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
