@@ -405,8 +405,7 @@ This model pipeline takes about 50 seconds to fit
 <img>
 
 ## Hyperparameter Tuning
-
-<img>
+Hyperparameter tuning is relatively simpler comparing to the transformation section. We performed **grid search** hyperparameter tuning with the K-fold of 5 and then found the best `max_depth` for this random forest classifier to be 18, the `num_estimators` to be 130, and the `criterion` to be entropy. This seems to be quite a good parameter as it performs quite well in practice, not **over fitiing** nor **under fitting**.
 
 # Model Evaluation
 [Back to Catalog](#content-for-this-project)
@@ -471,8 +470,6 @@ For the dummy model:
 |  3 |    0.19214  | 0.0325203 |  0.0556258 |    5412 |
 |  4 |    0.203553 | 0.17888   |  0.19042   |    5445 |
 |  5 |    0.20334  | 0.766318  |  0.321398  |    5546 |
-
-
 
 ### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
