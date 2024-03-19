@@ -3,7 +3,5 @@ theme: jekyll-theme-so-simple
 plugins:
 - jekyll-remote-theme
 
-skin: "/assets/css/skins/light.css"
-
 title: Homogenous Ensemble Learning in Highly Imbalanced Data
 description: Predictive Model on Recipe Data
