@@ -49,27 +49,20 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` data frame:
-Column	                 |Description|
-|---                     |---        |
-|`'name'	`            |Recipe name|
-|`'id'`	                 |Recipe ID|
-|`'minutes'`	         |Minutes to prepare recipe|
-|`'contributor_id'`	     |User ID who submitted this recipe|
-|`'submitted'`	            | Date recipe was submitted|
-|`'tags'`	              |Food.com tags for recipe|
-|`'nutrition'`	          |Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein    (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value”|
-|`'n_steps'`	          |Number of steps in recipe|
-|`'steps'`	              |Text for recipe steps, in order|
-|`'description'`	     | User-provided description|
+<iframe
+  src="assets/recipe.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
-This is the `interaction` data frame
-|Column|Description|
-|---|---|
-|`'user_id'`	|User ID|
-|`'recipe_id'`	|Recipe ID|
-|`'date'`	|Date of interaction|
-|`'rating'`	|Rating given|
-|`'review'`	|Review text|
+This is the `interaction` data frame:
+<iframe
+  src="assets/interactions.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
@@ -77,7 +70,7 @@ This is the `interaction` data frame
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 
-1. Left merge the recipes and interactions datasets together.
+1. First, we left merge the `recipes` and `interactions` datasets together.
 2. In the merged dataset, we also filled all ratings of 0 with np.NaN as `rating` of zero doesn't make sense, we will be evaluating this in the missingness mechanism section.
 3. We then find the average rating per recipe (as a series) and add this series containing the average rating per recipe back to the recipes dataset.
 
