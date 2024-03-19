@@ -47,7 +47,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="600"/></p>
+<p><img src="assets/rfc.png" alt="random forest classifier" width="700"/></p>
 
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
@@ -55,14 +55,14 @@ We can first look at the data frame that we will be working with in this project
 This is the `rcipe` raw data frame:
 <iframe
   src="assets/recipe.html"
-  width="600"
+  width="700"
   height="300"
   frameborder="0"
 ></iframe>
 This is the `interaction` raw data frame:
 <iframe
   src="assets/interactions.html"
-  width="600"
+  width="700"
   height="200"
   frameborder="0"
 ></iframe>
@@ -109,7 +109,7 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 
 <iframe
   src="assets/eda1.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -118,7 +118,7 @@ Looks like that our data have a lot of outliers! we might want to write a functi
 
 <iframe
   src="assets/eda2.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -127,7 +127,7 @@ Looks like the data are kind of imbalanced in `rating` (at this point, we though
 
 <iframe
   src="assets/eda3.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -136,7 +136,7 @@ Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, thi
 
 <iframe
   src="assets/eda4.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -145,7 +145,7 @@ It also seems like more `sugar` and more `total_fat` (transformed from `nutritio
 
 <iframe
   src="assets/eda5.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -157,7 +157,7 @@ We have implemented a few groupby function previously that groups the data frame
 
 <iframe
   src="assets/eda6.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -166,7 +166,7 @@ Looking at the right column of graph, it seems like the previous relationships t
 
 <iframe
   src="assets/eda7.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -198,21 +198,21 @@ Let's assume that the missingess of `description` column is related to the three
 
 <iframe
   src="assets/missing_kde_calories.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
 
 <iframe
   src="assets/missing_kde_n_ingredients.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
 
 <iframe
   src="assets/missing_kde_n_steps.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -224,21 +224,21 @@ Now we want to perform permutation testing with each of the continuous variable 
 
 <iframe
   src="assets/missing_permutation_calories.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
 
 <iframe
   src="assets/missing_permutation_n_ingredients.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
 
 <iframe
   src="assets/missing_permutation_n_steps.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -280,7 +280,7 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 
 <iframe
   src="assets/permutation_test.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
@@ -403,6 +403,14 @@ Other than that, the second highest feature importantness is teh forth feature t
 ></iframe>
 
 ### Confusion Matrix, Evaluation Metrics, and ROC_AUC
+Recall that when we evaluate a model, we need to look at multiple metrics to really understand how our model is performing. From the baseline model, we know that **accuracy can really lie!** We can borrow a image from [here](https://towardsdatascience.com/comprehensive-guide-to-multiclass-classification-with-sklearn-127cc500f362) to demonstrate what we are evaluating really quickly
+
+<p align="center"><img src="assets/evaluation.png" alt="tfidf" width="350"/></p>
+
+Let's look at the confusion matrix again first, but this time in a percentage form.
+
+<p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="350"/></p>
+
 Let's formalize the test result by using the `classification_report` function from `sk_learn`
 - The bottom of the table shows 2 different aspects of the prediction evaluation,
     1. one is `macro_avg` or the simple average for each of teh column of evaluation metrics
@@ -440,7 +448,7 @@ We run a permutation test to see if the difference in accuracy is significant.
 
 <iframe
   src="assets/fairness.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
