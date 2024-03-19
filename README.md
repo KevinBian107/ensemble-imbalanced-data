@@ -63,7 +63,7 @@ This is the `interaction` raw data frame:
 <iframe
   src="assets/interactions.html"
   width="600"
-  height="450"
+  height="200"
   frameborder="0"
 ></iframe>
 
