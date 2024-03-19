@@ -23,6 +23,7 @@ Author: Kaiwen Bian & Bella Wang
     - [Model Evaluation](#model-evaluation)
         - [Feature Importantness](#feature-importantness)
         - [Confusion Matrix, Evaluation Metrics, and ROC_AUC](#confusion-matrix-evaluation-metrics-and-roc_auc)
+        - [Testing Set Evaluation](#tetsing-set-evaluation)
 8. [Fairness Analysis](#fairness-analysis)
 
 # Introduction
@@ -397,19 +398,28 @@ Other than that, the second highest feature importantness is teh forth feature t
 
 <iframe
   src="assets/feature.html"
-  width="600"
+  width="700"
   height="450"
   frameborder="0"
 ></iframe>
 
 ### Confusion Matrix, Evaluation Metrics, and ROC_AUC
-Recall that when we evaluate a model, we need to look at multiple metrics to really understand how our model is performing. From the baseline model, we know that **accuracy can really lie!** We can borrow a image from [here](https://towardsdatascience.com/comprehensive-guide-to-multiclass-classification-with-sklearn-127cc500f362) to demonstrate what we are evaluating really quickly
+Recall that when we evaluate a model, we need to look at multiple metrics to really understand how our model is performing. From the baseline model, we know that **accuracy can really lie!** We can borrow a image from [here](https://towardsdatascience.com/comprehensive-guide-to-multiclass-classification-with-sklearn-127cc500f362) to demonstrate what we are evaluating really quickly.
 
-<p align="center"><img src="assets/evaluation.png" alt="tfidf" width="350"/></p>
+<p align="center"><img src="assets/evaluation.png" alt="tfidf" width="700"/></p>
 
+In this section, we can look at the evaluation metrics for the model that we built and also the evaluation metrics for an dummy classifier that classifies `rating` **uniformally at random**. Notice that this does mean that the result would be highly biased towards the rating of 5 as there are simply more of the 5 ratings. We use this dummy classifier as a baseline comparison for the performance of our model. In another word, how much better is our model comparing to selecting just randomly from the data set.
+
+This the confusion matric for our model
+<p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="700"/></p>
+
+This is the confusion matric for the dummy model
+<p align="center"><img src="assets/evaluation2.svg" alt="eval1" width="700"/></p>
+
+
+### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
-
-<p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="350"/></p>
+<p align="center"><img src="assets/evaluation3.svg" alt="eval1" width="700"/></p>
 
 Let's formalize the test result by using the `classification_report` function from `sk_learn`
 - The bottom of the table shows 2 different aspects of the prediction evaluation,
@@ -420,11 +430,31 @@ Let's formalize the test result by using the `classification_report` function fr
 
 After the weighted_avg evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
 
-<img>
+| precision | recall | f1-score | support |
+|-----------|--------|----------|---------|
+| 0.01      | 0.21   | 0.02     | 447     |
+| 0.01      | 0.23   | 0.02     | 405     |
+| 0.03      | 0.20   | 0.06     | 1222    |
+| 0.18      | 0.20   | 0.19     | 6380    |
+| 0.78      | 0.20   | 0.32     | 27867   |
+|-----------|--------|----------|---------|
+| accuracy  |        | 0.20     | 36321   |
+| macro avg | 0.20   | 0.21     | 0.12    | 36321   |
+| weighted avg | 0.63 | 0.20     | 0.28    | 36321   |
 
 Clearly, there is a difference in the recall and f1 score. There isn't that big of a differences in precision for the weighted avg because the number of 5 rating are plenty in the data set (77%), causing the precision for 5 to reach 77% directly.
 
-<img>
+| precision | recall | f1-score | support |
+|-----------|--------|----------|---------|
+| 0.10      | 0.30   | 0.15     | 447     |
+| 0.10      | 0.05   | 0.07     | 405     |
+| 0.25      | 0.28   | 0.27     | 1222    |
+| 0.40      | 0.13   | 0.20     | 6380    |
+| 0.81      | 0.91   | 0.86     | 27867   |
+|-----------|--------|----------|---------|
+| accuracy  |        | 0.73     | 36321   |
+| macro avg | 0.33   | 0.33     | 0.31    | 36321   |
+| weighted avg | 0.70 | 0.73     | 0.70    | 36321   |
 
 Next, we want to also look at the `ROC_AUC` score or **area under the receiver operating characteristic curve**. Again, like many metrics, they are originally designed for binary classfications, but we can also apply to multi-class classfications by doing `ovr` strategy (estimating by making grouped for comparison).
 
