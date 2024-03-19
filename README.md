@@ -56,14 +56,12 @@ This is the `rcipe` raw data frame:
 <iframe
   src="assets/recipe.html"
   width="600"
-  height="350"
   frameborder="0"
 ></iframe>
 This is the `interaction` raw data frame:
 <iframe
   src="assets/interactions.html"
-  width="350"
-  height="100"
+  width="600"
   frameborder="0"
 ></iframe>
 
