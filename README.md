@@ -471,6 +471,10 @@ For the dummy model:
 |  4 |    0.203553 | 0.17888   |  0.19042   |    5445 |
 |  5 |    0.20334  | 0.766318  |  0.321398  |    5546 |
 
+<br>
+
+With such comparison, it looks like our model is doing quite a good job! However, the recall and preciison for catagories other than the rating of 5 may seem to be quite low. This is due to the imbalance nature of the data set, in the next section, we will be conducting testings on the test data set and adjust such imbalance data effect on evaluation using weighted average.
+
 ### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
 <p align="center"><img src="assets/evaluation3.svg" alt="eval1" width="500"/></p>
@@ -542,4 +546,6 @@ We run a permutation test to see if the difference in accuracy is significant.
 This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis!
 
 ## More Questions?
+If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open souced on GitHub:
+
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
