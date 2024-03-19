@@ -122,7 +122,7 @@ After the transformation, we have types of each of the columns as the following:
 We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the **developer repository** or **full report** for more):
 
 | name                                 |   minutes |   contributor_id |   sodium |   protein |   carbs |
-|:-------------------------------------|----------:|-----------------:|---------:|----------:|--------:|
+|--------------------------------------|-----------|------------------|----------|-----------|---------|
 | 1 brownies in the world    best ever |        40 |           985201 |        3 |         3 |       6 |
 | 1 in canada chocolate chip cookies   |        45 |          1848091 |       22 |        13 |      26 |
 | 412 broccoli casserole               |        40 |            50969 |       32 |        22 |       3 |
@@ -204,8 +204,8 @@ We actually made more edas and feature engineering with **textual features**, bu
 
 This would be an example output of such textual feature analysis (randomly sample 10 rows):
 
-|   recipe_id | 0                                                  |
-|------------:|:---------------------------------------------------|
+|   recipe_id | Top5 Important Words                               |
+|-------------|----------------------------------------------------|
 |      318280 | else, library, tries, return, names                |
 |      420289 | eatingwel, recipe, by, about, com                  |
 |      456743 | allrecipes, poultry, condiment, pepper, argentine  |
@@ -223,7 +223,7 @@ This would be an example output of such textual feature analysis (randomly sampl
 We are specifically working with the version of the data set that have been grouped by with `recipe_id` to check the missingness, each `recipe_id` in this case would be unique. We can start with checking whcih column is missing. For the easiness of graphing, we will first slice out the outliers in each of the numerical columns using `outlier` function, which slices out ouliers that's out of the 99th percentile of the dataset. First we can check what is actually missing in the data set.
 
 |             | missing |
-|:------------|-----:|
+|-------------|------|
 | avg_rating  | 1679 |
 | rating      | 1679 |
 | description |   48 |
