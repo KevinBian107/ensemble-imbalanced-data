@@ -1,5 +1,3 @@
-
-# Introduction
 Author: Kaiwen Bian & Bella Wang
 
 [Full Report Document](assets/report.pdf)
@@ -117,7 +115,7 @@ We actually made more edas and feature engineering with **textual features**, bu
 - We will probably not directly use this approach here as it runs really slow! But we may use a similar approach that have a better runtime complexity!
 
 This would be an example output of such textual feature analysis:
-<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
+<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="600"/></p>
 
 # Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
