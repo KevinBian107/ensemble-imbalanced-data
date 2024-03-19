@@ -53,18 +53,20 @@ We can first look at the data frame that we will be working with in this project
 This is the `rcipe` data frame:
 <iframe
   src="assets/recipe.html"
-  width="300"
-  height="200"
+  width="350"
+  height="350"
   frameborder="0"
 ></iframe>
 
 This is the `interaction` data frame:
 <iframe
   src="assets/interactions.html"
-  width="300"
-  height="200"
+  width="350"
+  height="350"
   frameborder="0"
 ></iframe>
+
+These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`.
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
