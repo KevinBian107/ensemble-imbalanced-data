@@ -56,7 +56,7 @@ This is the `rcipe` raw data frame:
 <iframe
   src="assets/recipe.html"
   width="600"
-  height="450"
+  height="300"
   frameborder="0"
 ></iframe>
 This is the `interaction` raw data frame:
