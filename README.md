@@ -465,11 +465,11 @@ Clearly, there is a difference in the recall and f1 score. There isn't that big 
 
 Next, we want to also look at the `ROC_AUC` score or **area under the receiver operating characteristic curve**. Again, like many metrics, they are originally designed for binary classfications, but we can also apply to multi-class classfications by doing `ovr` strategy (estimating by making grouped for comparison).
 
-<img>
+<p align="center"><img src="assets/roc.png" alt="tfidf" width="350"/></p>
+
+Our model scored a `0.7008646321559988`!
 
 This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
-
-<p align="center"><img src="assets/roc.png" alt="tfidf" width="350"/></p>
 
 # Fairness Analysis
 [Back to Catalog](#content-for-this-project)
