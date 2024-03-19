@@ -56,6 +56,8 @@ This is the `rcipe` data frame:
   src="assets/recipe.html"
   width="800"
   height="600"
+  frameborder="0"
+  allowfullscreen
 ></iframe>
 
 This is the `interaction` data frame
