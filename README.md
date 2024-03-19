@@ -105,34 +105,62 @@ After the transformation, we have types of each of the columns as the following:
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
 
-<img>
+<iframe
+  src="assets/eda1.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier`, which will be used quite often later on.
 
-<img>
+<iframe
+  src="assets/eda2.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 Looks like the data are kind of imbalanced in `rating` (at this point, we thought that this wouldn't effect our modle too much, but it turns out later to be one of the main challenge that we need to deal with during the moeling phase).
 
-<img>
+<iframe
+  src="assets/eda3.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, this will be utilized later in our **feature engineering** section.
 
-<img>
+<iframe
+  src="assets/eda4.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process.
 
-<img>
+<iframe
+  src="assets/eda5.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
 
 ## Aggreagted Analysis
 We have implemented a few groupby function previously that groups the data frame by `user_id` and by `recipe_id` then handle each of the column picked accordinly. Now we can first use the groupby functions that we have implemented to look at some aggregated data first before using it for the next few sections.
 
-<img>
+<iframe
+  src="assets/eda6.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 Looking at the right column of graph, it seems like the previous relationships taht we observed in no aggregation data is still preserved in the aggregated version where higher `calories` seems to be correlated to higher `rating` and `n_ingredients` and `n_steps` seems to have some relationships with `rating` as well.
 
-<img>
+<iframe
+  src="assets/eda7.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 When aggregating by user, something interesting appears, it seems like that `rating` column is not so much correlated with teh `n_steps` and `n_ingrredients` column though it is still quite correlated with the `calories` column. **Though we will not be working with this version of the aggregated data frame firectly when we are making our predictive model, this ideas may be taken into considerations when choosing features.**
 
@@ -161,14 +189,46 @@ One interesting one to analyze is `description`, because it is hard to say direc
 ### Decision Rule for Missing Description
 Let's assume that the missingess of `description` column is related to the three columns here (`n_ingredients`, `n_steps`, and `calories`) (continuous columns), we assume that the missingness for `description` wouldn't depend on discrete columns.
 
-<img>
+<iframe
+  src="assets/missing_kde_calories.html"
+  width="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/missing_kde_n_ingredients.html"
+  width="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/missing_kde_n_steps.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 `description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results).
 
 ### Permutation Testing Using K-S Statistics
 Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of p=0.05.
 
-<img>
+<iframe
+  src="assets/missing_permutation_calories.html"
+  width="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/missing_permutation_n_ingredients.html"
+  width="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/missing_permutation_n_steps.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories` or `n_steps`.
 
@@ -205,7 +265,11 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 
 ## Conducting Permutation Testing
 
-<img>
+<iframe
+  src="assets/permutation_test.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 The result is significant! **We reject the null hypothesis with a p value that is lower than 0.05!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
 
@@ -317,7 +381,11 @@ We have 60 features in our model with feature 0 and feature 1 having the most ef
 
 Other than that, the second highest feature importantness is teh forth feature to the 11th feature and 22th feature to 31th feature. These correspond to the `tag_pca` column!
 
-<img>
+<iframe
+  src="assets/feature.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 ### Confusion Matrix, Evaluation Metrics, and ROC_AUC
 Let's formalize the test result by using the `classification_report` function from `sk_learn`
@@ -355,7 +423,11 @@ We run a permutation test to see if the difference in accuracy is significant.
 - Test statistic: Difference in accuracy (is_in - not_in)
 - Significance level: p value of 0.05
 
-<img>
+<iframe
+  src="assets/fairness.html"
+  width="600"
+  frameborder="0"
+></iframe>
 
 This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis!
 
