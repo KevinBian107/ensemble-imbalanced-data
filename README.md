@@ -1,3 +1,4 @@
+# Introduction
 Author: Kaiwen Bian & Bella Wang
 
 [Full Report Document](assets/report.pdf)
