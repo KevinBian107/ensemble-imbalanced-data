@@ -28,7 +28,9 @@ Author: Kaiwen Bian & Bella Wang
 # Introduction
 This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a reconmander system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
 
-With the basics from this project:
+We are particularly interesting in predicting user preference (`raing` columns as target) using multiple numerical features and textual feature transformation (tfidf, pca, ...) with a homogenous ensemble learning method (random forest) multi-class classifier.
+
+With the basics from this project moving forward:
 1. We can build reconmander systems that can reconmand better recipes to users to better fit their needs and appetite.
 2. Understand an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
 
@@ -204,7 +206,7 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 
 <img>
 
-The result is significant! **We reject the null hypothesis!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
+The result is significant! **We reject the null hypothesis with a p value that is lower than 0.05!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
 
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
