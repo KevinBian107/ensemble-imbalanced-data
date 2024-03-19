@@ -2,7 +2,6 @@ title: Homogenous Ensemble Learning in Highly Imbalanced Data
 description: Predictive Model on Recipe Data
 
 theme: minima
-remote_theme: jekyll/minima
 
 plugins:
 - jekyll-remote-theme
