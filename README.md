@@ -2,7 +2,6 @@ Author: Kaiwen Bian & Bella Wang
 
 [Full Report Document](assets/report.pdf)
 
-
 # Content for this Project
 1. [Introduction](#introduction)
 2. [Data Transformation and EDA](#data-transformation-and-eda)
