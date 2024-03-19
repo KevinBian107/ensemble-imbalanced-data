@@ -4,7 +4,7 @@ Author: Kaiwen Bian & Bella Wang
 
 # Content for this Project
 1. [Introduction](#introduction)
-2. [Data Transformation and EDA](#data-transformation-and-eda)
+2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
     - [Merging & Transformation](#merging--transformation)
     - [Univariate & Bivariate Analysis](#univariate--bivariate-analysis)
     - [Aggreagted Analysis](#aggreagted-analysis)
@@ -48,8 +48,25 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 <p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="600"/></p>
 
 ## Data Frame Description
+We can first look at the data frame that we will be working with in this project:
 
-# Data Transformation and EDA
+| Column          | Description                                                                                      |
+|-----------------|--------------------------------------------------------------------------------------------------|
+| `name`          | Recipe name                                                                                      |
+| `id`            | Recipe ID                                                                                        |
+| `minutes`       | Minutes to prepare recipe                                                                        |
+| `contributor_id`| User ID who submitted this recipe                                                                |
+| `submitted`     | Date recipe was submitted                                                                        |
+| `tags`          | Food.com tags for recipe                                                                         |
+| `nutrition`     | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), ... |
+| `n_steps`       | Number of steps in recipe                                                                        |
+| `steps`         | Text for recipe steps, in order                                                                  |
+| `description`   | User-provided description                                                                         |
+
+
+# Data Cleaning, Transformation, and EDA
+[Back to Catalog](#content-for-this-project)
+
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 1. Left merge the recipes and interactions datasets together.
@@ -82,7 +99,7 @@ After the transformation, we have types of each of the columns as the following:
     - quantitative mathamatical operations allowed (**quantitative continuous**)
 
 ## Univariate & Bivariate Analysis
-We will be performing some **Explorative Data Analysis** on our `recipe` data set:
+We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
 
 <img>
 
@@ -90,7 +107,7 @@ Looks like that our data have a lot of outliers! we might want to write a functi
 
 <img>
 
-Looks like the data are kind of **imbalanced** in `rating` (at this point, we thought that this wouldn't effect our modle too much, but it turns out later to be one of the main challenge that we need to deal with during the moeling phase).
+Looks like the data are kind of imbalanced in `rating` (at this point, we thought that this wouldn't effect our modle too much, but it turns out later to be one of the main challenge that we need to deal with during the moeling phase).
 
 <img>
 
@@ -98,14 +115,14 @@ Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, thi
 
 <img>
 
-It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising!
+It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process.
 
 <img>
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
 
 ## Aggreagted Analysis
-Now we can first use the groupby function that we have implemented to look at some aggregated data first before using it for the next few sections
+We have implemented a few groupby function previously that groups the data frame by `user_id` and by `recipe_id` then handle each of the column picked accordinly. Now we can first use the groupby functions that we have implemented to look at some aggregated data first before using it for the next few sections.
 
 <img>
 
@@ -138,14 +155,14 @@ One interesting one to analyze is `description`, because it is hard to say direc
 
 ## MAR Anlaysis
 ### Decision Rule for Missing Description
-Let's assume that the missingess of `description` column is related to the `col` column for **continuous** columns, wouldn't depend on **discrete** columns.
+Let's assume that the missingess of `description` column is related to the three columns here (`n_ingredients`, `n_steps`, and `calories`) (continuous columns), we assume that the missingness for `description` wouldn't depend on discrete columns.
 
 <img>
 
 `description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results).
 
 ### Permutation Testing Using K-S Statistics
-Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of $p=0.05$
+Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of p=0.05.
 
 <img>
 
@@ -160,11 +177,11 @@ Since we want to do certain textual feature analysis for our predictive model, w
 
 ## Intro to TF-IDF
 ### Term Frequency Inverse Document Frequency
-`TF-IDF` is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The TF-IDF Formula is a as follows:
+TF-IDF is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The TF-IDF Formula is a as follows:
 
 <p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="600"/></p>
 
-We will be using `TfidfVectorizer` to help our calculation.
+We will be using the `TfidfVectorizer` package from `sk_learn` to help our calculation.
 
 ### Differences in Max for TF-IDF
 We want to see whether the distibution of `high_rated` recipes and the distribution of `low_rated` recipes actually come from the same distribution. Thus, we will be performing a **permutation test** here with the following hypothesis:
@@ -186,12 +203,12 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 
 <img>
 
-The result is significant! **We reject the null hypothesis! There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.**
+The result is significant! **We reject the null hypothesis!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
 
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
 
-From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to **reconmander system**
+From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to reconmander system.
 
 Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
 
@@ -217,7 +234,7 @@ We are splitting the main data set into 3 components of `train`, `validate`, and
 - Train: 56.25%
 
 ## Feature Engineering
-In the basic model pipeline we are working with not a great number of features:
+In the basic model pipeline we are working with not a great number of features. The value of the threshold and normalziation target are results from previous eda section.
 1. binarized `n_step` with threshold 25
 2. binarized `n_ingredients` with threshold 20
 3. normalized `minutes` with respects to binarized `n_steps` using the customized class `StdScalerByGroup`
@@ -328,10 +345,10 @@ This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operatin
 We want to evaluate whether the model is fair for treating all populations. In particular, we want to check in the scope of looking at the predictions for the vegan group and the vegetarian group. Let's first check how many of them are in the data set.
 
 ### Difference Significant?
-We run a **permutation test** to see if the difference in accuracy is significant.
-- **Null Hypothesis**: The classifier's accuracy is the same for both vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
-- **Alternative Hypothesis**: The classifier's accuracy is higher for non vegan + vegetarian tags.
-- Test statistic: Difference in accuracy (is_in minus not_in).
+We run a permutation test to see if the difference in accuracy is significant.
+- **Null Hypothesis**: The classifier's accuracy **is the same** for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
+- **Alternative Hypothesis**: The classifier's accuracy **is higher** for `recipes` with non vegan + vegetarian tags.
+- Test statistic: Difference in accuracy (is_in - not_in)
 - Significance level: 0.05
 
 <img>
