@@ -54,18 +54,18 @@ This is the `rcipe` data frame:
 
 <iframe
   src="assets/recipe.html"
-  width="800"
-  height="600"
-  frameborder="0"
-  allowfullscreen
+  width=800
+  height=600
+  frameborder=0
 ></iframe>
 
 This is the `interaction` data frame
 
 <iframe
   src="assets/interactions.html"
-  width="800"
-  height="600"
+  width=800
+  height=600
+  frameborder=0
 ></iframe>
 
 # Data Cleaning, Transformation, and EDA
