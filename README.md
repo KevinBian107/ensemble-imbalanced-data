@@ -1,6 +1,6 @@
 Author: Kaiwen Bian & Bella Wang
 
-# Content for this Project
+# Catalog for this Project
 1. [Introduction](#introduction)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
     - [Merging & Transformation](#merging--transformation)
@@ -26,6 +26,8 @@ Author: Kaiwen Bian & Bella Wang
 8. [Fairness Analysis](#fairness-analysis)
 
 # Introduction
+[Back to Catalog](#content-for-this-project)
+
 This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a reconmander system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
 
 We are particularly interesting in predicting user preference (`raing` columns as target) using multiple numerical features and textual feature transformation (tfidf, pca, ...) with a homogenous ensemble learning method (random forest) multi-class classifier.
@@ -53,7 +55,7 @@ We can first look at the data frame that we will be working with in this project
 This is the `rcipe` raw data frame:
 <iframe
   src="assets/recipe.html"
-  width="350"
+  width="600"
   height="350"
   frameborder="0"
 ></iframe>
@@ -61,7 +63,7 @@ This is the `interaction` raw data frame:
 <iframe
   src="assets/interactions.html"
   width="350"
-  height="350"
+  height="100"
   frameborder="0"
 ></iframe>
 
