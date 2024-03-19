@@ -1,7 +1,5 @@
 Author: Kaiwen Bian & Bella Wang
 
-[Full Report Document](assets/report.pdf)
-
 # Content for this Project
 1. [Introduction](#introduction)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
@@ -51,48 +49,54 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` data frame:
-
-<iframe
-  src="assets/recipe.html"
-  width=800
-  height=600
-  frameborder=0
-></iframe>
+Column	                 |Description|
+|---                     |---        |
+|`'name'	`            |Recipe name|
+|`'id'`	                 |Recipe ID|
+|`'minutes'`	         |Minutes to prepare recipe|
+|`'contributor_id'`	     |User ID who submitted this recipe|
+|`'submitted'`	            | Date recipe was submitted|
+|`'tags'`	              |Food.com tags for recipe|
+|`'nutrition'`	          |Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein    (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value”|
+|`'n_steps'`	          |Number of steps in recipe|
+|`'steps'`	              |Text for recipe steps, in order|
+|`'description'`	     | User-provided description|
 
 This is the `interaction` data frame
-
-<iframe
-  src="assets/interactions.html"
-  width=800
-  height=600
-  frameborder=0
-></iframe>
+|Column|Description|
+|---|---|
+|`'user_id'`	|User ID|
+|`'recipe_id'`	|Recipe ID|
+|`'date'`	|Date of interaction|
+|`'rating'`	|Rating given|
+|`'review'`	|Review text|
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
 
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
+
 1. Left merge the recipes and interactions datasets together.
 2. In the merged dataset, we also filled all ratings of 0 with np.NaN as `rating` of zero doesn't make sense, we will be evaluating this in the missingness mechanism section.
 3. We then find the average rating per recipe (as a series) and add this series containing the average rating per recipe back to the recipes dataset.
 
 We also performed a series of follow up transformations to fit our needs for the data set as follows:
-1. Some columns, like `nutrition`, contain values that look like lists, but are actually strings that look like lists. We turned the strings into actual columns for every unique value in those lists
-2. Convert to list for `steps`, `ingredients`, and `tags`
-3. Convert `date` and `submitted` to Timestamp object and rename as `review_date` and `recipe_date`
-4. Convert Types
-5. Drop same `id` (same with `recipe_id`)
-6. Replace 'nan' with np.NaN
+1. Some columns, like `nutrition`, contain values that look like lists, but are actually strings that look like lists. We turned the strings into actual columns for every unique value in those lists.
+2. Convert to list for `steps`, `ingredients`, and `tags`.
+3. Convert `date` and `submitted` to Timestamp object and rename as `review_date` and `recipe_date`.
+4. Convert Types.
+5. Drop same `id` (same with `recipe_id`).
+6. Replace 'nan' string with np.NaN.
 
 After the transformation, we have types of each of the columns as the following:
 1. `String`: [name, contributor_id, user_id, recipe_id, ]
     - quantitative or qualitative, but cannot perform mathamatical operations (**quntitative discrete**)
     - `name` is the name of recipe
-    - `contributor_id` is the author id of the recipe _(shape=7157)_
-    - `recipe_id` is the id of teh recipe _(shape=25287)_
+    - `contributor_id` is the author id of the recipe
+    - `recipe_id` is the id of teh recipe
         - `id` from the original dataframe also is the id of the recipe, dropped after merging
-    - `user_id` is the id of the reviewer _(shape=8402)_
+    - `user_id` is the id of the reviewer
 2. `List`: [tags, steps, description, ingredients, review]
     - qualitative, no mathamatical operation (**qualitative discrete**)
 3. `int`: [n_steps, minutes, n_ingredients, rating]
