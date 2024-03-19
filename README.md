@@ -50,6 +50,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
 
+This is the `rcipe` data frame:
 | Column          | Description                                                                                      |
 |-----------------|--------------------------------------------------------------------------------------------------|
 | `name`          | Recipe name                                                                                      |
@@ -63,6 +64,14 @@ We can first look at the data frame that we will be working with in this project
 | `steps`         | Text for recipe steps, in order                                                                  |
 | `description`   | User-provided description                                                                         |
 
+This is the `interaction` data frame
+| Column     | Description         |
+|------------|---------------------|
+| `user_id`  | User ID             |
+| `recipe_id`| Recipe ID           |
+| `date`     | Date of interaction |
+| `rating`   | Rating given        |
+| `review`   | Review text         |
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
