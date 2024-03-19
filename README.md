@@ -54,19 +54,28 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` raw data frame:
-<iframe
-  src="assets/recipe.html"
-  width="700"
-  height="300"
-  frameborder="0"
-></iframe>
+| Column         | Description                                                                                          |
+|----------------|------------------------------------------------------------------------------------------------------|
+| 'name'         | Recipe name                                                                                          |
+| 'id'           | Recipe ID                                                                                            |
+| 'minutes'      | Minutes to prepare recipe                                                                            |
+| 'contributor_id' | User ID who submitted this recipe                                                                 |
+| 'submitted'    | Date recipe was submitted                                                                           |
+| 'tags'         | Food.com tags for recipe                                                                             |
+| 'nutrition'    | Nutrition information in the form [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)]; PDV stands for “percentage of daily value” |
+| 'n_steps'      | Number of steps in recipe                                                                            |
+| 'steps'        | Text for recipe steps, in order                                                                      |
+| 'description'  | User-provided description                                                                            |
+
 This is the `interaction` raw data frame:
-<iframe
-  src="assets/interactions.html"
-  width="700"
-  height="200"
-  frameborder="0"
-></iframe>
+| Column      | Description         |
+|-------------|---------------------|
+| 'user_id'   | User ID             |
+| 'recipe_id' | Recipe ID           |
+| 'date'      | Date of interaction |
+| 'rating'    | Rating given        |
+| 'review'    | Review text         |
+
 
 These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`. The next section would go more in depth into the transformation on each of the column to prepare for the modeling phase.
 
@@ -411,50 +420,48 @@ Recall that when we evaluate a model, we need to look at multiple metrics to rea
 In this section, we can look at the evaluation metrics for the model that we built and also the evaluation metrics for an dummy classifier that classifies `rating` **uniformally at random**. Notice that this does mean that the result would be highly biased towards the rating of 5 as there are simply more of the 5 ratings. We use this dummy classifier as a baseline comparison for the performance of our model. In another word, how much better is our model comparing to selecting just randomly from the data set.
 
 This the confusion matric for our model
-<p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="700"/></p>
+<p align="center"><img src="assets/evaluation1.svg" alt="eval1" width="500"/></p>
 
 This is the confusion matric for the dummy model
-<p align="center"><img src="assets/evaluation2.svg" alt="eval1" width="700"/></p>
+<p align="center"><img src="assets/evaluation2.svg" alt="eval1" width="500"/></p>
 
 
 ### Tetsing Set Evaluation
 Let's look at the confusion matrix again first, but this time in a percentage form.
-<p align="center"><img src="assets/evaluation3.svg" alt="eval1" width="700"/></p>
+<p align="center"><img src="assets/evaluation3.svg" alt="eval1" width="500"/></p>
 
 Let's formalize the test result by using the `classification_report` function from `sk_learn`
 - The bottom of the table shows 2 different aspects of the prediction evaluation,
     1. one is `macro_avg` or the simple average for each of teh column of evaluation metrics
     2. one is `weighted_avg`, which re-evaluate the accuracy of our modle based on the data distribution of the data set, whcih provide a better representation of the model's performance given imbalanced data like this one.
 
-<img>
+|    | precision | recall | f1-score | support |
+|----|-----------|--------|----------|---------|
+| 1.0 |    0.10   |  0.30  |   0.15   |   447   |
+| 2.0 |    0.10   |  0.05  |   0.07   |   405   |
+| 3.0 |    0.25   |  0.28  |   0.27   |  1222   |
+| 4.0 |    0.40   |  0.13  |   0.20   |  6380   |
+| 5.0 |    0.81   |  0.91  |   0.86   | 27867   |
+|----|-----------|--------|----------|---------|
+| accuracy |            |        |   0.73   | 36321   |
+| macro avg|    0.33   |  0.33  |   0.31   | 36321   |
+| weighted avg| 0.70   |  0.73  |   0.70   | 36321   |
 
 After the weighted_avg evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
 
-| precision | recall | f1-score | support |
-|-----------|--------|----------|---------|
-| 0.01      | 0.21   | 0.02     | 447     |
-| 0.01      | 0.23   | 0.02     | 405     |
-| 0.03      | 0.20   | 0.06     | 1222    |
-| 0.18      | 0.20   | 0.19     | 6380    |
-| 0.78      | 0.20   | 0.32     | 27867   |
-|-----------|--------|----------|---------|
-| accuracy  |        | 0.20     | 36321   |
-| macro avg | 0.20   | 0.21     | 0.12    | 36321   |
-| weighted avg | 0.63 | 0.20     | 0.28    | 36321   |
+|    | precision | recall | f1-score | support |
+|----|-----------|--------|----------|---------|
+| 1.0 |    0.01   |  0.21  |   0.02   |   447   |
+| 2.0 |    0.01   |  0.23  |   0.02   |   405   |
+| 3.0 |    0.03   |  0.20  |   0.06   |  1222   |
+| 4.0 |    0.18   |  0.20  |   0.19   |  6380   |
+| 5.0 |    0.78   |  0.20  |   0.32   | 27867   |
+|----|-----------|--------|----------|---------|
+| accuracy |            |        |   0.20   | 36321   |
+| macro avg|    0.20   |  0.21  |   0.12   | 36321   |
+| weighted avg| 0.63   |  0.20  |   0.28   | 36321   |
 
 Clearly, there is a difference in the recall and f1 score. There isn't that big of a differences in precision for the weighted avg because the number of 5 rating are plenty in the data set (77%), causing the precision for 5 to reach 77% directly.
-
-| precision | recall | f1-score | support |
-|-----------|--------|----------|---------|
-| 0.10      | 0.30   | 0.15     | 447     |
-| 0.10      | 0.05   | 0.07     | 405     |
-| 0.25      | 0.28   | 0.27     | 1222    |
-| 0.40      | 0.13   | 0.20     | 6380    |
-| 0.81      | 0.91   | 0.86     | 27867   |
-|-----------|--------|----------|---------|
-| accuracy  |        | 0.73     | 36321   |
-| macro avg | 0.33   | 0.33     | 0.31    | 36321   |
-| weighted avg | 0.70 | 0.73     | 0.70    | 36321   |
 
 Next, we want to also look at the `ROC_AUC` score or **area under the receiver operating characteristic curve**. Again, like many metrics, they are originally designed for binary classfications, but we can also apply to multi-class classfications by doing `ovr` strategy (estimating by making grouped for comparison).
 
