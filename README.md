@@ -52,28 +52,21 @@ We can first look at the data frame that we will be working with in this project
 
 This is the `rcipe` data frame:
 
-| Column          | Description                                                                                      |
-|-----------------|--------------------------------------------------------------------------------------------------|
-| `name`          | Recipe name                                                                                      |
-| `id`            | Recipe ID                                                                                        |
-| `minutes`       | Minutes to prepare recipe                                                                        |
-| `contributor_id`| User ID who submitted this recipe                                                                |
-| `submitted`     | Date recipe was submitted                                                                        |
-| `tags`          | Food.com tags for recipe                                                                         |
-| `nutrition`     | Nutrition information in the form calories (#), total fat (PDV), sugar (PDV), sodium (PDV), ...  |
-| `n_steps`       | Number of steps in recipe                                                                        |
-| `steps`         | Text for recipe steps, in order                                                                  |
-| `description`   | User-provided description                                                                        |
+<iframe
+  src="assets/recipe.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 This is the `interaction` data frame
 
-| Column     | Description         |
-|------------|---------------------|
-| `user_id`  | User ID             |
-| `recipe_id`| Recipe ID           |
-| `date`     | Date of interaction |
-| `rating`   | Rating given        |
-| `review`   | Review text         |
+<iframe
+  src="assets/interactions.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
@@ -150,7 +143,7 @@ We actually made more edas and feature engineering with **textual features**, bu
 - We will probably not directly use this approach here as it runs really slow! But we may use a similar approach that have a better runtime complexity!
 
 This would be an example output of such textual feature analysis:
-<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="600"/></p>
+<p align="center"><img src="assets/tfidf.png" alt="tfidf" width="300"/></p>
 
 # Missingness Mechanism
 [Back to Catalog](#content-for-this-project)
