@@ -143,10 +143,16 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
 
-<iframe
-  src="assets/eda1.html"
-  style="width: 100%; height: 400px; border: none;"
-></iframe>
+|       |      sodium |   calories |         minutes |
+|-------|-------------|------------|-----------------|
+| count | 234429      | 234429     | 234429          |
+| mean  |     29.2618 |    419.529 |    106.79       |
+| std   |    129.556  |    583.224 |   3285.97       |
+| min   |      0      |      0     |      0          |
+| 25%   |      5      |    170.7   |     20          |
+| 50%   |     15      |    301.1   |     35          |
+| 75%   |     33      |    491.1   |     60          |
+| max   |  29338      |  45609     |      1.0512e+06 |
 
 Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier()`, which will be used quite often later on.
 
