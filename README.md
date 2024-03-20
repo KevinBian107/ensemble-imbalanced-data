@@ -48,7 +48,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<p><img src="assets/rfc.png" alt="random forest classifier" width="500"/></p>
+<p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="500"/></p>
 
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
@@ -166,7 +166,9 @@ Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, thi
   frameborder="0"
 ></iframe>
 
-It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process.
+It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process. This relationship is more obvious when looking at the left column between `sugar`/`rating` and `calories`/`rating`.
+
+*Note: we originally used a 3D plot that illustrate much more celarly the relationship  between these data, however, 3D plot is not that friendly for mobile platforms and crashes directly when trying to access from a mobile platform, this is why we are using a scatter matrix here.*
 
 <iframe
   src="assets/eda5_2.html"
