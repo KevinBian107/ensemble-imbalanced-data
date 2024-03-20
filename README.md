@@ -378,7 +378,7 @@ In the basic model pipeline we are working with not a great number of features. 
 ## Baseline Model's Pipeline
 The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with **no** hyperparameter tuned, the model pipeline can be nicely summarized by the image below:
 
-<p align="center"><img src="assets/mbase_pl.png" alt="base model pipeline" width="500"/></p>
+<p align="center"><img src="assets/mbase_pl.png" alt="base model pipeline" width="700"/></p>
 
 The confusion matrix for this base model is illustrated as below:
 
@@ -429,7 +429,7 @@ We balanced the dataset by using automatic balaning argumnet "balanced", we have
 
 This model pipeline takes about 50 seconds to fit
 
-<p align="center"><img src="assets/mfinal_pl.png" alt="final model pipeline" width="500"/></p>
+<p align="center"><img src="assets/mfinal_pl.png" alt="final model pipeline" width="700"/></p>
 
 ## Hyperparameter Tuning
 Hyperparameter tuning is relatively simpler comparing to the transformation section. We performed **grid search** hyperparameter tuning with the K-fold of 5 and then found the best `max_depth` for this random forest classifier to be 18, the `num_estimators` to be 130, and the `criterion` to be entropy. This seems to be quite a good parameter as it performs quite well in practice, not **over fitiing** nor **under fitting**.
