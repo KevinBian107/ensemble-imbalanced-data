@@ -267,7 +267,7 @@ Then we can check the `n_ingredients` column:
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-`description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results).
+`description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S Statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results) since K-S Statistics involves looking at the CDF differences between the 2 curve, looking at the overall distribution, less effected by same mean but different shapes.
 
 ### Permutation Testing Using K-S Statistics
 Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of p=0.05.
@@ -298,6 +298,12 @@ Since we want to do certain textual feature analysis for our predictive model, w
 TF-IDF is a very naive but common and well performing technique that people use to understand textual features. It essentially meausres the **how important** an word $t$ is for an sentence in comparison with all sentences in the document. The TF-IDF Formula is a as follows:
 
 <p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="600"/></p>
+
+$$
+
+\begin{align*}\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right) \end{align*}
+
+$$
 
 We will be using the `TfidfVectorizer` package from `sk_learn` to help our calculation.
 
