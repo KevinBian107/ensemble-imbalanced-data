@@ -159,9 +159,21 @@ Looks like the data are kind of imbalanced in `rating` (at this point, we though
 
 Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, this will be utilized later in our **feature engineering** section.
 
+<iframe
+  src="assets/eda4_2.html"
+  width="700"
+  height="450"
+  frameborder="0"
+></iframe>
 
 It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process.
 
+<iframe
+  src="assets/eda5_2.html"
+  width="700"
+  height="450"
+  frameborder="0"
+></iframe>
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
 
