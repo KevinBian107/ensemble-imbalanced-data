@@ -1,5 +1,7 @@
 Author: Kaiwen Bian & Bella Wang
 
+***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience***
+
 # Content for this Project
 1. [Introduction](#introduction)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
