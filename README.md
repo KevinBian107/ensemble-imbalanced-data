@@ -162,7 +162,7 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 
 <br>
 
-Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier()` where we removed outliers that is below the 0.01 quantile or above the 0.99 quantile, which will be used quite often later on. Due to the messyness of real world data, this isn't exactly enough to remove all the outliers, but this should be good enough to remove some really extreme ones.
+Looks like that our data have a lot of outliers! Especially looking at the differences between the max value and the mean value for all three columns. We might want to write a function to deal with that. Here we are writing the function `outlier()` where we removed outliers that is below the 0.01 quantile or above the 0.99 quantile, which will be used quite often later on. Due to the messyness of real world data, this isn't exactly enough to remove all the outliers, but this should be good enough to remove some really extreme ones.
 
 <iframe
   src="assets/eda2.html"
