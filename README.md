@@ -1,5 +1,7 @@
 By Kaiwen Bian & Bella Wang
 
+Reading Time: *20 minutes*
+
 ***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience. If you are using a mobile device, you might need to move around the plot to view it and the website may take sometimes to load first***
 
 # Content for this Project
