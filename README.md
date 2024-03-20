@@ -378,7 +378,7 @@ In the basic model pipeline we are working with not a great number of features. 
 ## Baseline Model's Pipeline
 The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with **no** hyperparameter tuned, the model pipeline can be nicely summarized by the illustration below:
 
-```bash
+```python
 Pipeline(steps=[('preprocessor',
                  ColumnTransformer(transformers=[('bi_nsteps',
                                                   Binarizer(threshold=25),
@@ -454,7 +454,7 @@ We balanced the dataset by using automatic balaning argumnet "balanced", we have
 
 This model pipeline takes about 50 seconds to fit
 
-```bash
+```python
 Pipeline(steps=[('preprocessor',
                  ColumnTransformer(transformers=[('tfidf_key_ohe_description',
                                                   Pipeline(steps=[('tfidf',
