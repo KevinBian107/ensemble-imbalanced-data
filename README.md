@@ -586,6 +586,16 @@ Our model scored a `0.7008646321559988`!
 
 This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
 
+We have also drawn a ROC curve ourselves, this is a weighted ROC graph already as multiclass classification results can not directly be plotted on a 2D ROC graph, the calculation is conducted using the equations from `sk_learn`'s metrics repository
+
+<p align="center"><img src="assets/roc_eq.png" alt="tfidf" width="350"/></p>
+
+Our model's ROC curve is demonstrated as the below:
+
+<p align="center"><img src="assets/roc_curve.svg" alt="tfidf" width="350"/></p>
+
+As demonstarted previously using the ROC AUC socre, our model does a pretty good performance!
+
 # Fairness Analysis
 [Back to Catalog](#content-for-this-project)
 
