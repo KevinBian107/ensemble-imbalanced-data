@@ -157,9 +157,7 @@ Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, thi
 
 <iframe
   src="assets/eda4_2.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process. This relationship is more obvious when looking at the left column between `sugar`/`rating` and `calories`/`rating`.
