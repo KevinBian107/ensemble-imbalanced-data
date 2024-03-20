@@ -4,6 +4,8 @@ Author: Kaiwen Bian & Bella Wang
 
 # Content for this Project
 1. [Introduction](#introduction)
+  - [Random Forest Algorithm](#random-forest-algorithm)
+  - [Data Set Description](#data-set-description)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
     - [Merging & Transformation](#merging--transformation)
     - [Univariate & Bivariate Analysis](#univariate--bivariate-analysis)
@@ -15,6 +17,7 @@ Author: Kaiwen Bian & Bella Wang
 4. [Permutation Testing of TF-IDF](#permutation-using-tf-idf)
 5. [Framing a Predictive Question](#framing-a-predictive-question)
 6. [Baseline Model: An Naive Approach](#baseline-model-an-naive-approach)
+    - [Preprocess Data Set](#preprocess-data-set)
     - [Handling Missingness in Data](#handling-missing-data)
     - [Train/Val/Test Split](#trainvalidatetest-split)
     - [Feature Engineering](#feature-engineering)
@@ -54,7 +57,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 
 <p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="350"/></p>
 
-## Data Frame Description
+## Data Set Description
 We can first look at the data frame that we will be working with in this project:
 
 This is the `rcipe` raw data frame:
@@ -88,16 +91,20 @@ This is the `interaction` raw data frame:
 
 These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`. The next section would go more in depth into the transformation on each of the column to prepare for the modeling phase.
 
+*Note: this data frame is quite messy with "hard to work with" types (i.e. date as string) and multiple information compacted in the same column (i.e. nutrition), we will be first doing some data cleaning and conversion of data type using customized function we have created (`initial` and `transform`).*
+
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
 
 ## Merging & Transformation
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 
+### Merging and `initial()` function
 1. First, we left merge the `recipes` and `interactions` datasets together.
 2. In the merged dataset, we also filled all ratings of 0 with np.NaN as `rating` of zero doesn't make sense, we will be evaluating this in the missingness mechanism section.
 3. We then find the average rating per recipe (as a series) and add this series containing the average rating per recipe back to the recipes dataset.
 
+### Transforming data set using `transform()` function
 We also performed a series of follow up transformations to fit our needs for the data set as follows:
 1. Some columns, like `nutrition`, contain values that look like lists, but are actually strings that look like lists. We turned the strings into actual columns for every unique value in those lists.
 2. Convert to list for `steps`, `ingredients`, and `tags`.
@@ -141,7 +148,7 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier`, which will be used quite often later on.
+Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier()`, which will be used quite often later on.
 
 <iframe
   src="assets/eda2.html"
@@ -316,9 +323,20 @@ Specifically, **we want to predict `rating` (5 catagories) in the original data 
 # Baseline Model: An Naive Approach
 [Back to Catalog](#content-for-this-project)
 
-<img>
+## Preprocess Data Set
+From this point forward, the modeling process would use the data set transformed by the following function where we used `.pipe()` function to conduct all neccessary changed to the base merged data frame in the same way from the previous section, then selcected out only the neccessary column that we would be using for this question.
 
-Notice that in here we did create a extra feature of `is_low` and `is_good`, which will be use for later. We have conider the problem of ptential **data leakage**. However, this is prior to train/val/test split and the test data (not being used for fit) would not have such problem.
+```python
+base_df = (step0
+           .pipe(initial)
+           .pipe(transform_df)
+           .pipe(outlier)
+           )[['n_ingredients','minutes','n_steps','description','sugar','calories','sodium','total_fat','rating','tags','name','recipe_date','review']]
+```
+
+### Special Considerations:
+1. We created two additional features of `is_low` and `is_good`, which will be use for later for creating pool of text. We have conider the problem of ptential **data leakage**. However, this creation is prior to train/val/test split and the test data (not being used for fit) would still have these 2 columns but it would not be used to predict the `rating`. Thus, this wouldn't constitute the issue of data leakage as this pool of text is only created and fitted using training data.
+2. We included the `review` column as a feature in our data set, which may be introducing **data not available at the time of modeling** as `reviews` doesn't exactly come before `rating` does. However, the data farme we are using does not have one to one mapping between recipe and user, meaning that there may exist many previous ratings and reviews prior to one user giving rating, this makes the available review at the time of modeling rating to be *n-1*. As an naive approach, we would use `reviews` directly.
 
 ## Handling Missing Data
 ### Missing Rating
@@ -582,9 +600,7 @@ Next, we want to also look at the `ROC_AUC` score or **area under the receiver o
 
 <p align="center"><img src="assets/roc.png" alt="tfidf" width="350"/></p>
 
-Our model scored a `0.7008646321559988`!
-
-This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
+Our model scored a `0.7008646321559988`! This is pretty good! from [here](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) we can show the curve of ROC for different performance of an classfier. Our model's performance shows that about about 70% of teh area are covered, signifying that our model performs quite well!
 
 We have also drawn a ROC curve ourselves, this is a weighted ROC graph already as multiclass classification results can not directly be plotted on a 2D ROC graph, the calculation is conducted using the equations from `sk_learn`'s metrics repository.
 
@@ -605,7 +621,7 @@ We have a pretty good model so now we want to evaluate whether our model is **fa
 We run a permutation test to see if the difference in accuracy is significant.
 - **Null Hypothesis**: The classifier's accuracy **is the same** for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
 - **Alternative Hypothesis**: The classifier's accuracy **is higher** for `recipes` with non vegan + vegetarian tags.
-- Test statistic: Difference in accuracy (is_in - not_in)
+- **Test Statistic**: Difference in accuracy (is_in - not_in)
 - Significance level: p value of 0.05
 
 <iframe
