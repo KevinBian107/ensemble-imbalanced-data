@@ -1,0 +1,75 @@
+/* Base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media only screen and (max-width: 600px) {
+  /* Adjust layout */
+  .container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  /* Stack columns vertically in smaller screens */
+  .column {
+    width: 100%;
+  }
+
+  /* Make images responsive */
+  .img-responsive {
+    width: 100%; /* Adjust this as needed */
+    height: auto;
+  }
+
+  /* Font sizes for readability */
+  body {
+    font-size: 18px;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.5em; /* Increase size for headings */
+  }
+
+  /* Navigation adjustments */
+  .navbar a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  /* Forms and buttons for easier interaction */
+  input[type="text"], input[type="email"], textarea, button, input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+}
