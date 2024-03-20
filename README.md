@@ -122,15 +122,13 @@ After the transformation, we have types of each of the columns as the following:
     - quantitative mathamatical operations allowed (**quantitative continuous**)
 
 We can take a look at the cleaned data frame (note this is only a part of the actual data frame, the actual data frame is too big to be displayed on this website, you can check the [developer repository](https://github.com/KevinBian107/ensemble_imbalance_data) or [full report](assets/report.pdf) for more):
-
-| name                                 |   minutes |   n_steps |   n_ingredients |   contributor_id |   sodium |   protein |   sugar |   total_fat |   calories |
-|:-------------------------------------|----------:|----------:|----------------:|-----------------:|---------:|----------:|--------:|------------:|-----------:|
-| 1 brownies in the world    best ever |        40 |        10 |               9 |           985201 |        3 |         3 |      50 |          10 |      138.4 |
-| 1 in canada chocolate chip cookies   |        45 |        12 |              11 |          1848091 |       22 |        13 |     211 |          46 |      595.1 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            50969 |       32 |        22 |       6 |          20 |      194.8 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            50969 |       32 |        22 |       6 |          20 |      194.8 |
-| 412 broccoli casserole               |        40 |         6 |               9 |            50969 |       32 |        22 |       6 |          20 |      194.8 |
-
+| name                                 |   n_steps |   calories | tags                                                                                                                                                                                                                        |
+|--------------------------------------|-----------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 brownies in the world    best ever |        10 |      138.4 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] |
+| 1 in canada chocolate chip cookies   |        12 |      595.1 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings']                                                               |
+| 412 broccoli casserole               |         6 |      194.8 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+| 412 broccoli casserole               |         6 |      194.8 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
+| 412 broccoli casserole               |         6 |      194.8 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
 
