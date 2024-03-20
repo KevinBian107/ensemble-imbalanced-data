@@ -1,6 +1,6 @@
-Author: Kaiwen Bian & Bella Wang
+By Kaiwen Bian & Bella Wang
 
-***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience. If you are using a mobile device, you might need to move around the plot to view it***
+***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience. If you are using a mobile device, you might need to move around the plot to view it and the website may take sometimes to load first***
 
 # Content for this Project
 1. [Introduction](#introduction)
