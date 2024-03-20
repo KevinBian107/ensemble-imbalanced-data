@@ -649,6 +649,6 @@ This result is **significant with a p vlaue less than 0.05**, we reject the null
 2. Similar approach on tackling imbalanced data issue from this [UCB Paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/666.pdf)
 
 ## More Questions?
-If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open souced on GitHub:
+If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open sourced on GitHub:
 
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
