@@ -59,6 +59,7 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
 <p align="center"><img src="assets/rfc_2.webp" alt="random forest classifier" width="700"/></p>
+<p aligh='center'>https://medium.com/@mrmaster907/introduction-random-forest-classification-by-example-6983d95c7b91</p>
 
 ## Data Set Description
 We can first look at the data frame that we will be working with in this project:
