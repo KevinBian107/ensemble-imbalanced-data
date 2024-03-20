@@ -376,9 +376,34 @@ In the basic model pipeline we are working with not a great number of features. 
 5. simple counts of `tags` column
 
 ## Baseline Model's Pipeline
-The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with **no** hyperparameter tuned, the model pipeline can be nicely summarized by the image below:
+The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with **no** hyperparameter tuned, the model pipeline can be nicely summarized by the illustration below:
 
-<p align="center"><img src="assets/mbase_pl.png" alt="base model pipeline" width="700"/></p>
+```bash
+Pipeline(steps=[('preprocessor',
+                 ColumnTransformer(transformers=[('bi_nsteps',
+                                                  Binarizer(threshold=25),
+                                                  ['n_steps']),
+                                                 ('bi_ningredients',
+                                                  Binarizer(threshold=20),
+                                                  ['n_ingredients']),
+                                                 ('norm_minutes_binary_nsteps',
+                                                  Pipeline(steps=[('bi_nsteps',
+                                                                   Binarizer(threshold=25)),
+                                                                  ('norm_minutes_binary_nsteps',
+                                                                   FunctionTransformer(func=<function <lambda> at 0x31c3ed5e0>))])...
+                                                 ('norm_minutes_binary_ningredients',
+                                                  Pipeline(steps=[('bi_nsteps',
+                                                                   Binarizer(threshold=25)),
+                                                                  ('norm_minutes_binary_nsteps',
+                                                                   FunctionTransformer(func=<function <lambda> at 0x31c3ed5e0>))]),
+                                                  ['n_ingredients', 'minutes']),
+                                                 ('tag_counts',
+                                                  FunctionTransformer(func=<function tag_counts at 0x31c3ed4c0>),
+                                                  ['tags'])])),
+                ('rfc',
+                 RandomForestClassifier(criterion='entropy', max_depth=2,
+                                        n_estimators=140))])
+```
 
 The confusion matrix for this base model is illustrated as below:
 
@@ -429,7 +454,32 @@ We balanced the dataset by using automatic balaning argumnet "balanced", we have
 
 This model pipeline takes about 50 seconds to fit
 
-<p align="center"><img src="assets/mfinal_pl.png" alt="final model pipeline" width="700"/></p>
+```bash
+Pipeline(steps=[('preprocessor',
+                 ColumnTransformer(transformers=[('tfidf_key_ohe_description',
+                                                  Pipeline(steps=[('tfidf',
+                                                                   FunctionTransformer(func=<function detect_key_low at 0x31c4094c0>)),
+                                                                  ('key_ohe',
+                                                                   OneHotEncoder(drop='first'))]),
+                                                  ['is_low', 'description']),
+                                                 ('tfidf_key_ohe_name',
+                                                  Pipeline(steps=[('tfidf',
+                                                                   FunctionTransformer(func=<function detect_key_low at 0x...
+                                                                   FunctionTransformer(func=<function <lambda> at 0x31c86f820>)),
+                                                                  ('date_ohe',
+                                                                   OneHotEncoder())]),
+                                                  ['recipe_date']),
+                                                 ('tag_pca',
+                                                  FunctionTransformer(func=<function tag_ohe_pca at 0x31c4099d0>),
+                                                  ['tags']),
+                                                 ('is_sentiment',
+                                                  FunctionTransformer(func=<function is_sentiment at 0x31c4093a0>),
+                                                  ['review'])])),
+                ('rfc',
+                 RandomForestClassifier(class_weight='balanced',
+                                        criterion='entropy', max_depth=18,
+                                        n_estimators=130))])
+```
 
 ## Hyperparameter Tuning
 Hyperparameter tuning is relatively simpler comparing to the transformation section. We performed **grid search** hyperparameter tuning with the K-fold of 5 and then found the best `max_depth` for this random forest classifier to be 18, the `num_estimators` to be 130, and the `criterion` to be entropy. This seems to be quite a good parameter as it performs quite well in practice, not **over fitiing** nor **under fitting**.
