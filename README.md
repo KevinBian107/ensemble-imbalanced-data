@@ -141,7 +141,9 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 | 412 broccoli casserole               |         6 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        |      194.8 |
 
 ## Univariate & Bivariate Analysis
-We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
+We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns. We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
+
+*Note: we used a violin plot to visualize this reslut previously. However, it takes up too many space to keep this plot on the website (10mb), so we decided to use just a table format.*
 
 |       |      sodium |   calories |         minutes |
 |-------|-------------|------------|-----------------|
@@ -154,7 +156,9 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 | 75%   |     33      |    491.1   |     60          |
 | max   |  29338      |  45609     |      1.0512e+06 |
 
-Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier()`, which will be used quite often later on.
+<br>
+
+Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier()` where we removed outliers that is below the 0.01 quantile or above the 0.99 quantile, which will be used quite often later on. Due to the messyness of real world data, this isn't exactly enough to remove all the outliers, but this should be good enough to remove some really extreme ones.
 
 <iframe
   src="assets/eda2.html"
