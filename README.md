@@ -299,12 +299,6 @@ TF-IDF is a very naive but common and well performing technique that people use 
 
 <p align="center"><img src="assets/eq2.png" alt="random forest classifier" width="600"/></p>
 
-$$
-
-\begin{align*}\text{tfidf}(t, d) &= \text{tf}(t, d) \cdot \text{idf}(t) \\\ &= \frac{\text{\# of occurrences of $t$ in $d$}}{\text{total \# of words in $d$}} \cdot \log \left(\frac{\text{total \# of documents}}{\text{\# of documents in which $t$ appears}} \right) \end{align*}
-
-$$
-
 We will be using the `TfidfVectorizer` package from `sk_learn` to help our calculation.
 
 ### Differences in Max for TF-IDF
