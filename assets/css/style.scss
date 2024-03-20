@@ -1,75 +1,89 @@
-/* Base styles */
-body, html {
+// Define a mixin for phone adjustments
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+
+// Base styles for all devices
+body {
+  font-family: 'Helvetica', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  line-height: 1.6;
 }
 
 .container {
-  width: 90%;
-  margin: auto;
+  width: 80%;
+  margin: 0 auto;
 }
 
-.img-responsive {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Navigation */
-.navbar {
-  background-color: #333;
-  overflow: hidden;
-}
-
-.navbar a {
-  float: left;
-  display: block;
-  color: white;
+.header, .footer {
+  background-color: #f3f3f3;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+  padding: 20px 0;
 }
 
-/* Responsive */
-@media only screen and (max-width: 600px) {
-  /* Adjust layout */
+.navbar {
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+    margin: 0 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+}
+
+// Phone adjustments
+@include for-phone-only {
   .container {
-    width: 100%;
-    padding: 0 10px;
+    width: 95%;
+    padding: 0;
   }
 
-  /* Stack columns vertically in smaller screens */
-  .column {
-    width: 100%;
-  }
-
-  /* Make images responsive */
-  .img-responsive {
-    width: 100%; /* Adjust this as needed */
-    height: auto;
-  }
-
-  /* Font sizes for readability */
-  body {
-    font-size: 18px;
+  .navbar {
+    li {
+      display: block;
+      margin: 5px 0;
+    }
   }
 
   h1, h2, h3 {
-    font-size: 1.5em; /* Increase size for headings */
+    font-size: 1.25rem;
   }
 
-  /* Navigation adjustments */
-  .navbar a {
-    float: none;
-    display: block;
-    text-align: left;
+  .header, .footer {
+    padding: 10px 0;
   }
 
-  /* Forms and buttons for easier interaction */
-  input[type="text"], input[type="email"], textarea, button, input[type="submit"] {
+  // Ensure images are responsive
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  // Adjust form fields for better usability
+  input[type='text'], input[type='email'], textarea {
     width: 100%;
-    padding: 15px;
-    margin: 5px 0;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    padding: 10px;
+  }
+
+  button, input[type='submit'] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover, input[type='submit']:hover {
+    background-color: #0056b3;
   }
 }
