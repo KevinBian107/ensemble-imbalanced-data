@@ -1,6 +1,6 @@
 Author: Kaiwen Bian & Bella Wang
 
-***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience. If you are using a mobile device, yu might need to move around the plot to view it***
+***This website uses plenty of Plotly HTML graph, using a computer browser would deliver the best reading experience. If you are using a mobile device, you might need to move around the plot to view it***
 
 # Content for this Project
 1. [Introduction](#introduction)
@@ -234,20 +234,18 @@ One interesting one to analyze is `description`, because it is hard to say direc
 
 ## MAR Anlaysis
 ### Decision Rule for Missing Description
-Let's assume that the missingess of `description` column is related to the three columns here (`n_ingredients`, `n_steps`, and `calories`) (continuous columns), we assume that the missingness for `description` wouldn't depend on discrete columns.
+Let's assume that the missingess of `description` column is related to the 2 columns here (`n_ingredients` and `calories`) since these 2 continuous columns seems to be an common factor that might cause the missing of description (too high calories? Or too many ingredients?). However, these are only some hypothesis, we need to actually try to reject or fail to reject them. We assume that the missingness for `description` wouldn't depend on discrete columns.
+
+We can first look at `description` missing dependent on the `calories` column, we will do a first step analysis by just looking at the `kde` graph of the two distribution, one where `description` is missing and one where `description` is not missing. *Note that this doesn't give us enough power to say we reject or fail to reject our hypothesis, rather it is just a first quick check of the distribution.*
 
 <iframe
   src="assets/missing_kde_calories.html"
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
+Then we can check the `n_ingredients` column:
 <iframe
   src="assets/missing_kde_n_ingredients.html"
-  style="width: 100%; height: 400px; border: none;"
-></iframe>
-
-<iframe
-  src="assets/missing_kde_n_steps.html"
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
@@ -266,12 +264,9 @@ Now we want to perform permutation testing with each of the continuous variable 
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-<iframe
-  src="assets/missing_permutation_n_steps.html"
-  style="width: 100%; height: 400px; border: none;"
-></iframe>
+Seems like `n_ingredients` p value passes the threshold of p=0.05!
 
-From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories` or `n_steps`.
+From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories`.
 
 # Permutation using TF-IDF
 [Back to Catalog](#content-for-this-project)
@@ -294,15 +289,13 @@ We want to see whether the distibution of `high_rated` recipes and the distribut
 - **Alternative hypothesis**: There **are** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
 - We decide to use a testing threshold of p=0.05
 
-As for the **test statistics**, we actually have many options, but they all circles around the **differences** of something:
+As for the **test statistics**, we actually have many options, but they all circles around the **differences** of something, we will go through each of them and discuss their cons and pros:
 - Using `sum` -> longer sentences have greater sum
 - Using `mean` -> very easy to be influenced by outlier
 - Using `partial-mean` -> get the most essence part of the sentence, however, complexity too high because of the sorting
 - Using `max` -> most important one word's TF-IDF
 
-With all these considerations, we pick our test statistics to be **differences in max of TF-IDF for each sentence**
-
-This section provide a **solid prove** of why we are using TF-IDF as a feature for our predictive model!
+With all these considerations, we pick our test statistics to be **differences in max of TF-IDF for each sentence**. This section provide a **solid prove** of why we are using TF-IDF as a feature for our predictive model!
 
 ## Conducting Permutation Testing
 
@@ -331,15 +324,20 @@ Notice that in here we did create a extra feature of `is_low` and `is_good`, whi
 1. It have been shwon earlier that the missingness of the `rating` columns seems to be **NMAR**, so it is not dependent on the column but rather depending on itself. Thus, the naive approach taht we will be imputing the ratings through **random imputation**. However, because of the high imbalance nature of the data set, this may cause more `rating` of 5 to come up.
     - Regarding this issue, we ran the model on both imupting randomly and also on dropping the missing data directly for the `rating` column (second choise make sure that the target column is not randomly imputed, this may cause error)
     - After experimentation, drpping the missing `rating` directly results in both a training/validation and testing accuracy
-2. For the missingness in `description`, we make sure that the distribution of the data is the same by not dropping it but rather imputing it with simple white space. It is true that the    `description` column missgness is MAR, but it would be quite difficult to try to impute it, so we pick an naive solution in this project
-3. For missingness in `name`, because it is MCAR, we drop it directly.
+
+2. For the missingness in `description`, we make sure that the distribution of the data is the same by not dropping it but rather imputing it with simple white space. It is true that the `description` column missgness is MAR, but it would be quite difficult to try to impute it, so we pick an naive solution in this project.
 
 ## Train/Validate/Test Split
 We are splitting the main data set into 3 components of `train`, `validate`, and `test`. The main data set is plit to `big_train` and `test` first with big_train being 75% of the data. Then, the big_train data set is split again into the `validate` and the actual `train` data set with 75% in the train data set again. Each set is taking the percentatge as calculated below:
-- Test: 25%
-- Train_big: 75%
-- Validate: 18.75%
-- Train: 56.25%
+
+|    Splits   | Percentage |
+|-------------|------------|
+|    Test     |     25%    |
+| Train_big   |     75%    |
+|  Validate   |    18.75%  |
+|   Train     |    56.35%  |
+
+Agian, notice that the column does not sum up to 1, this is because that the validate and train set is a further split of train_big. train + validate + test = full sample.
 
 ## Feature Engineering
 In the basic model pipeline we are working with not a great number of features. The value of the threshold and normalziation target are results from previous eda section.
@@ -379,11 +377,11 @@ Pipeline(steps=[('preprocessor',
                                         n_estimators=140))])
 ```
 
-The confusion matrix for this base model is illustrated as below:
+We fit this model to the training data set and then use it for some simple evaluation. This model actually got an accuracy of `0.7672625821372197`, this sounds pretty good! But wait, remanber that accuracy does not entell everything. We can look at the confusion matrix for this base model is illustrated as below:
 
 <p align="center"><img src="assets/base_evaluation.svg" alt="base eval" width="500"/></p>
 
-Turns out the original dataset is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
+Turns out the original dataset target is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
 
 # Final Model: Ensemble Learning
 [Back to Catalog](#content-for-this-project)
@@ -399,23 +397,35 @@ The previous features are carried over to this model, which includes:
 5. simple counts of `tags` column, showing how many tags are in each `tag` column
 
 In addition, awe also added afew more features to capture the relationship we saw from EDA, whcih includes:
-1. Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`
-2. Two TF-IDF that have been one hot encoded:
-    - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF)
-    - We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
-    - Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words
-    - We perform such operations with both the `name` column and also the `description` column
-    - **Remark**: this feature improved the final model by roughly 10% accuracy, this is the `detect_key_low(df)` function
-        - We ahve also tried to trade off some complexity with better accuracy by using the count of the 5 top TF-IDF words in each row (just this function runs for about 3m)
-        - However, the performance didn't perform as well as argmax, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word)
-3. The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well.
-4. At last, we also used the `tag` column of each of the sentence to perform one hot encoding
-    - We first performed one hot encoding to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**
-    - Thus we filtered out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features
-    - At last, we conducted pca to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
-    - The `tag_ohe_pca(df)` function takes care of this step
-5. Analyzing whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function
-6. We have taken out irrelevant features such as the naive_bayes encoder taht we have implemented
+
+### RobustScaler With Numerical Features
+Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`
+
+### TFIDF Analysis
+Two TF-IDF that have been one hot encoded:
+- In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF).
+- We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
+- Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words.
+- We perform such operations with both the `name` column and also the `description` column.
+- **Remark**: this feature improved the final model by roughly 10% accuracy, this is the `detect_key_low(df)` function.
+    - We ahve also tried to trade off some complexity with better accuracy by using the count of the 5 top TF-IDF words in each row (just this function runs for about 3m).
+    - However, the performance didn't perform as well as argmax, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word).
+
+### Recipe Date
+The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well.
+
+### PCA on Tag
+At last, we also used the `tag` column of each of the sentence to perform one hot encoding.
+- We first performed one hot encoding to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**.
+- Thus we filtered out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features.
+- At last, we conducted pca to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
+- The `tag_ohe_pca(df)` function takes care of this step.
+
+### Naive Sentiment Analysis
+Some words impact strong sense of emotions, using simple sentiment analysis through checking words from "pool of words" we can analyze whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function.
+
+### Irrelevant Feature Handling
+We have taken out irrelevant features such as the naive_bayes encoder taht we have implemented.
 
 ## Model Pipeline
 Since this is a **multi-class classifictaion** problem and the data is also highly **imbalanced**, we are also adding a **dummy** classifier that classifies uniformally at random to bench mark our modle's performances. Of course, we will also use different evaluation metrics later to demonstarte the model's performances as well, the dummy classfier is just an "easy to view" example.
@@ -425,8 +435,6 @@ For the pipeline, we are still doing an **Homogenous Ensemble Learning** with de
 We balanced the dataset by using automatic balaning argumnet "balanced", we have also tried to use self customized dictionaries for assigning weights, However, this wouldn't be generalizable to unseen data as the distribution of data changes. The `sk_learn` packages does automatic weight assigning by the following formula:
 
 <p align="center"><img src="assets/eq3.png" alt="random forest classifier" width="300"/></p>
-
-This model pipeline takes about 50 seconds to fit
 
 ```python
 Pipeline(steps=[('preprocessor',
@@ -454,6 +462,8 @@ Pipeline(steps=[('preprocessor',
                                         criterion='entropy', max_depth=18,
                                         n_estimators=130))])
 ```
+
+This model pipeline takes about 50 seconds to fit.
 
 ## Hyperparameter Tuning
 Hyperparameter tuning is relatively simpler comparing to the transformation section. We performed **grid search** hyperparameter tuning with the K-fold of 5 and then found the best `max_depth` for this random forest classifier to be 18, the `num_estimators` to be 130, and the `criterion` to be entropy. This seems to be quite a good parameter as it performs quite well in practice, not **over fitiing** nor **under fitting**.
