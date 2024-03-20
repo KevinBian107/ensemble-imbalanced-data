@@ -159,21 +159,9 @@ Looks like the data are kind of imbalanced in `rating` (at this point, we though
 
 Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, this will be utilized later in our **feature engineering** section.
 
-<iframe
-  src="assets/eda4.html"
-  width="700"
-  height="450"
-  frameborder="0"
-></iframe>
 
 It also seems like more `sugar` and more `total_fat` (transformed from `nutrition`) seems to be related to higher `rating`! This is quite suprising and it also seems like that this would be a good feature to include in our model building process.
 
-<iframe
-  src="assets/eda5.html"
-  width="700"
-  height="450"
-  frameborder="0"
-></iframe>
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
 
@@ -372,9 +360,9 @@ In the basic model pipeline we are working with not a great number of features. 
 5. simple counts of `tags` column
 
 ## Baseline Model's Pipeline
-The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with hyperparameter tuned
+The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with hyperparameter tuned, the confusion matrix for this base model is illustrated as below:
 
-<img>
+<p align="center"><img src="assets/base_evaluation.svg" alt="eval1" width="500"/></p>
 
 Turns out the original dataset is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
 
