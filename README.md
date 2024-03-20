@@ -30,6 +30,7 @@ By Kaiwen Bian & Bella Wang
         - [Confusion Matrix & Evaluation Metrics](#confusion-matrix--evaluation-metrics)
         - [Testing Set Evaluation](#tetsing-set-evaluation)
 8. [Fairness Analysis](#fairness-analysis)
+9. [References](#references)
 
 # Introduction
 [Back to Catalog](#content-for-this-project)
@@ -640,6 +641,10 @@ We run a permutation test to see if the difference in accuracy is significant.
 ></iframe>
 
 This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis! Seems like our model is prettu robust for the group of vegan + vegetarian.
+
+# References
+1. Potential alternative approach to solve imbalanced data issue using [Balanced Random Forest](https://imbalanced-learn.org/stable/references/generated/imblearn.ensemble.BalancedRandomForestClassifier.html)
+2. Similar approach on tackling imbalanced data issue from this [UCB Paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/666.pdf)
 
 ## More Questions?
 If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open souced on GitHub:
