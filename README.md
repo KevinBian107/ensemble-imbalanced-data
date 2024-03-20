@@ -136,7 +136,7 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 
 <iframe
   src="assets/eda1.html"
-  class="responsive-iframe"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier`, which will be used quite often later on.
