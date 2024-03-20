@@ -321,11 +321,13 @@ Specifically, **we want to predict `rating` (5 catagories) in the original data 
 Notice that in here we did create a extra feature of `is_low` and `is_good`, which will be use for later. We have conider the problem of ptential **data leakage**. However, this is prior to train/val/test split and the test data (not being used for fit) would not have such problem.
 
 ## Handling Missing Data
-1. It have been shwon earlier that the missingness of the `rating` columns seems to be **NMAR**, so it is not dependent on the column but rather depending on itself. Thus, the naive approach taht we will be imputing the ratings through **random imputation**. However, because of the high imbalance nature of the data set, this may cause more `rating` of 5 to come up.
-    - Regarding this issue, we ran the model on both imupting randomly and also on dropping the missing data directly for the `rating` column (second choise make sure that the target column is not randomly imputed, this may cause error)
-    - After experimentation, drpping the missing `rating` directly results in both a training/validation and testing accuracy
+### Missing Rating
+It have been shwon earlier that the missingness of the `rating` columns seems to be **NMAR**, so it is not dependent on the column but rather depending on itself. Thus, the naive approach taht we will be imputing the ratings through **random imputation**. However, because of the high imbalance nature of the data set, this may cause more `rating` of 5 to come up.
+  - Regarding this issue, we ran the model on both imupting randomly and also on dropping the missing data directly for the `rating` column (second choise make sure that the target column is not randomly imputed, this may cause error)
+  - After experimentation, drpping the missing `rating` directly results in both a training/validation and testing accuracy
 
-2. For the missingness in `description`, we make sure that the distribution of the data is the same by not dropping it but rather imputing it with simple white space. It is true that the `description` column missgness is MAR, but it would be quite difficult to try to impute it, so we pick an naive solution in this project.
+### Missing Description
+For the missingness in `description`, we make sure that the distribution of the data is the same by not dropping it but rather imputing it with simple white space. It is true that the `description` column missgness is MAR, but it would be quite difficult to try to impute it, so we pick an naive solution in this project.
 
 ## Train/Validate/Test Split
 We are splitting the main data set into 3 components of `train`, `validate`, and `test`. The main data set is plit to `big_train` and `test` first with big_train being 75% of the data. Then, the big_train data set is split again into the `validate` and the actual `train` data set with 75% in the train data set again. Each set is taking the percentatge as calculated below:
@@ -518,6 +520,7 @@ For our model:
 |  5 |   0.918568  | 0.807835 |  0.85965   |   23766 |
 
 <br>
+This looks like a pretty good recall for all catagories of rating comparing to the dummy classifier one as shown below!
 
 For the dummy model:
 
@@ -541,6 +544,7 @@ Let's formalize the test result by using the `classification_report` function fr
 - The bottom of the table shows 2 different aspects of the prediction evaluation,
     1. one is `macro_avg` or the simple average for each of teh column of evaluation metrics
     2. one is `weighted_avg`, which re-evaluate the accuracy of our modle based on the data distribution of the data set, whcih provide a better representation of the model's performance given imbalanced data like this one.
+- The support here refers to the same as count in the previous table.
 
 |    | precision | recall | f1-score | support |
 |----|-----------|--------|----------|---------|
@@ -599,7 +603,7 @@ We run a permutation test to see if the difference in accuracy is significant.
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis!
+This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis! Seems like our model is prettu robust for the group of vegan + vegetarian.
 
 ## More Questions?
 If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open souced on GitHub:
