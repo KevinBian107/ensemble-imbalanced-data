@@ -136,9 +136,7 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 
 <iframe
   src="assets/eda1.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  class="responsive-iframe"
 ></iframe>
 
 Looks like that our data have a lot of outliers! we might want to write a function to deal with that. Here we are writing the function `outlier`, which will be used quite often later on.
@@ -152,9 +150,7 @@ Looks like the data are kind of imbalanced in `rating` (at this point, we though
 
 <iframe
   src="assets/eda3.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 Seems like there is a **threshold point** for `n_ingredients` and `n_steps`, this will be utilized later in our **feature engineering** section.
