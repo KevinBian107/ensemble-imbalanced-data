@@ -44,11 +44,13 @@ A **Decision Tree** essentially learns to come up with questions or decisions at
 
 <p align="center"><img src="assets/eq1.png" alt="random forest classifier" width="300"/></p>
 
+We are taking the negative of such value because log of an proportion (<1) value outputs a negative value. The minimum value that this formula can output is 0, which corresponds to log(1) or when the whole space is just one catagory!
+
 A **Random Forest** essentially is when at the splitting point of data to train/test/val, **a random subset of features** is taken out instead of choosing from all of them and then spliting the tree base on this subset of the feature, usually speaking $m = sqrt(d)$ seems to work well in practice and it is also the default that `sk_learn` uses. **This allows each decision trees to come up with different prediction rules for later on voting an best one**
 - Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
 - We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
 
-<p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="500"/></p>
+<p align="center"><img src="assets/rfc.png" alt="random forest classifier" width="350"/></p>
 
 ## Data Frame Description
 We can first look at the data frame that we will be working with in this project:
