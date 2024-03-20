@@ -166,9 +166,7 @@ It also seems like more `sugar` and more `total_fat` (transformed from `nutritio
 
 <iframe
   src="assets/eda5_2.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
@@ -178,18 +176,14 @@ We have implemented a few groupby function previously that groups the data frame
 
 <iframe
   src="assets/eda6.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 Looking at the right column of graph, it seems like the previous relationships taht we observed in no aggregation data is still preserved in the aggregated version where higher `calories` seems to be correlated to higher `rating` and `n_ingredients` and `n_steps` seems to have some relationships with `rating` as well.
 
 <iframe
   src="assets/eda7.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 When aggregating by user, something interesting appears, it seems like that `rating` column is not so much correlated with teh `n_steps` and `n_ingrredients` column though it is still quite correlated with the `calories` column. **Though we will not be working with this version of the aggregated data frame firectly when we are making our predictive model, this ideas may be taken into considerations when choosing features.**
@@ -242,23 +236,17 @@ Let's assume that the missingess of `description` column is related to the three
 
 <iframe
   src="assets/missing_kde_calories.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 <iframe
   src="assets/missing_kde_n_ingredients.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 <iframe
   src="assets/missing_kde_n_steps.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 `description` seems to also depend on `n_ingredients`. This is a very interesting graph because looks like the graph **shape** is quite different with the **mean** the same, instead of using permutation test statistics that involves **mean** we use **K-S statistics** insteaad (we have also down a test using differences in mean as well, which fail to identify any results).
@@ -268,23 +256,17 @@ Now we want to perform permutation testing with each of the continuous variable 
 
 <iframe
   src="assets/missing_permutation_calories.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 <iframe
   src="assets/missing_permutation_n_ingredients.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 <iframe
   src="assets/missing_permutation_n_steps.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories` or `n_steps`.
@@ -324,9 +306,7 @@ This section provide a **solid prove** of why we are using TF-IDF as a feature f
 
 <iframe
   src="assets/permutation_test.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 The result is significant! **We reject the null hypothesis with a p value that is lower than 0.05!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
@@ -494,9 +474,7 @@ Other than that, the second highest feature importantness is teh forth feature t
 
 <iframe
   src="assets/feature.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 ### Confusion Matrix, Evaluation Metrics, and ROC_AUC
@@ -607,9 +585,7 @@ We run a permutation test to see if the difference in accuracy is significant.
 
 <iframe
   src="assets/fairness.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis!
