@@ -24,7 +24,7 @@ Author: Kaiwen Bian & Bella Wang
     - [Hyperparameter Tuning](#hyperparameter-tuning)
     - [Model Evaluation](#model-evaluation)
         - [Feature Importantness](#feature-importantness)
-        - [Confusion Matrix, Evaluation Metrics, and ROC_AUC](#confusion-matrix-evaluation-metrics-and-roc_auc)
+        - [Confusion Matrix & Evaluation Metrics](#confusion-matrix--evaluation-metrics)
         - [Testing Set Evaluation](#tetsing-set-evaluation)
 8. [Fairness Analysis](#fairness-analysis)
 
@@ -473,7 +473,6 @@ Hyperparameter tuning is relatively simpler comparing to the transformation sect
 
 We will be conducting some simple evaluation with the model in this section with confusion matrix just to see the basic performance of the model. A more detaile  performance evaluation would be conducted in the **Test Data Evaluation** section. To really understand what we are evaluating, we need to first understand what metrics matters to us:
 
-Example:
 - **Precision for 5**: Out of all 5 we predicted, how many are actually 5 
 - **Recall for 5**: Out of all actual 5, how many did we get right
 
@@ -489,7 +488,7 @@ Other than that, the second highest feature importantness is teh forth feature t
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-### Confusion Matrix, Evaluation Metrics, and ROC_AUC
+### Confusion Matrix & Evaluation Metrics
 Recall that when we evaluate a model, we need to look at multiple metrics to really understand how our model is performing. From the baseline model, we know that **accuracy can really lie!** We can borrow a image from [here](https://towardsdatascience.com/comprehensive-guide-to-multiclass-classification-with-sklearn-127cc500f362) to demonstrate what we are evaluating really quickly.
 
 <p align="center"><img src="assets/evaluation.png" alt="tfidf" width="700"/></p>
