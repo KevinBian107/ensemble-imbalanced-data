@@ -376,9 +376,13 @@ In the basic model pipeline we are working with not a great number of features. 
 5. simple counts of `tags` column
 
 ## Baseline Model's Pipeline
-The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with hyperparameter tuned, the confusion matrix for this base model is illustrated as below:
+The pipeline for the model is constituted with a simple **Random Forest** multi-class classfier with **no** hyperparameter tuned, the model pipeline can be nicely summarized by the image below:
 
-<p align="center"><img src="assets/base_evaluation.svg" alt="eval1" width="500"/></p>
+<p align="center"><img src="assets/mbase_pl.png" alt="base model pipeline" width="500"/></p>
+
+The confusion matrix for this base model is illustrated as below:
+
+<p align="center"><img src="assets/base_evaluation.svg" alt="base eval" width="500"/></p>
 
 Turns out the original dataset is highly **imbalanced**, making the model always predicting a `rating` of 5 not missing many of the other details. This also means that as long as the model is always predicting the `rating` of 5, it will get an accuracy of 77% because 77% of the `rating` is 5 -> **accuracy doesn't entell everything!**. Thus, we need a better model than this that can capture some what more feature information, more engineering is needed!
 
@@ -425,7 +429,7 @@ We balanced the dataset by using automatic balaning argumnet "balanced", we have
 
 This model pipeline takes about 50 seconds to fit
 
-<img>
+<p align="center"><img src="assets/mfinal_pl.png" alt="final model pipeline" width="500"/></p>
 
 ## Hyperparameter Tuning
 Hyperparameter tuning is relatively simpler comparing to the transformation section. We performed **grid search** hyperparameter tuning with the K-fold of 5 and then found the best `max_depth` for this random forest classifier to be 18, the `num_estimators` to be 130, and the `criterion` to be entropy. This seems to be quite a good parameter as it performs quite well in practice, not **over fitiing** nor **under fitting**.
