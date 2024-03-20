@@ -145,9 +145,7 @@ Looks like that our data have a lot of outliers! we might want to write a functi
 
 <iframe
   src="assets/eda2.html"
-  width="700"
-  height="450"
-  frameborder="0"
+  style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
 Looks like the data are kind of imbalanced in `rating` (at this point, we thought that this wouldn't effect our modle too much, but it turns out later to be one of the main challenge that we need to deal with during the moeling phase).
