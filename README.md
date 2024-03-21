@@ -275,6 +275,10 @@ We are specifically working with the version of the data set that have been grou
 | rating      | 1679 |
 | description |   48 |
 
+</br>
+
+We noticed that the column `name` originally missing and it seems to be missing by **MCAR** or Missing Completely At Random because it doesn't seem to be fit to any of the other catagories. This column's missing value is later dropped when we perform outlier filtering. Since the missingness is MCAR, dropping it directly would be okay as well.
+
 ## NMAR Analysis
 However, on the other hand, the `rating` column seems to be **Not Missing At Random (NMAR)** becuase from what the website is showing, some people just didn't give rating, so the rating itself doesn't exist during the data collection process, so it makes sense for it to be null. We manually added `np.NaN` into the data set where previously it was filled a zero in the data set. Since `avg_ratng` is calculated from using the `rating` column, `avg_rating` would then be **Missing At Random (MAR)** dependent on `rating`.
 
