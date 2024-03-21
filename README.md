@@ -71,13 +71,16 @@ This is the `rcipe` raw data frame:
 | 'name'         | Recipe name                                                                                          |
 | 'id'           | Recipe ID                                                                                            |
 | 'minutes'      | Minutes to prepare recipe                                                                            |
-| 'contributor_id' | User ID who submitted this recipe                                                                 |
-| 'submitted'    | Date recipe was submitted                                                                           |
+| 'contributor_id' | User ID who submitted this recipe                                                                  |
+| 'submitted'    | Date recipe was submitted                                                                            |
 | 'tags'         | Food.com tags for recipe                                                                             |
-| 'nutrition'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)|
+| 'nutrition'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
 | 'n_steps'      | Number of steps in recipe                                                                            |
 | 'steps'        | Text for recipe steps, in order                                                                      |
 | 'description'  | User-provided description                                                                            |
+| 'n_steps'      | Number of recipe steps (numerical)                                                                   |
+| 'n_ingredients'| Number of recipe ingredients (numerical)                                                             |
+
 
 <br>
 
@@ -96,6 +99,30 @@ This is the `interaction` raw data frame:
 These two data frame both contain information that we need, particularly in the `nutrition` column (use for numerical input), and a few of the other catagorical columns such as `tags`, `description`, and `name`. The next section would go more in depth into the transformation on each of the column to prepare for the modeling phase.
 
 *Note: this data frame is quite messy with "hard to work with" types (i.e. date as string) and multiple information compacted in the same column (i.e. nutrition), we will be first doing some data cleaning and conversion of data type using customized function we have created (`initial` and `transform`).*
+
+### Columns that we care:
+Some essential we will be working with is listed below with description of each column:
+
+| Column         | Description                                                                                          |
+|----------------|------------------------------------------------------------------------------------------------------|
+| 'name'         | Recipe name (as index)                                                                               |
+| 'minutes'      | Minutes to prepare recipe                                                                            |
+| 'tags'         | Food.com tags for recipe in a list of string format                                                  |
+| 'calories'     | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'total fat'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'sugar'        | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'sodium'       | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'protein'      | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'n_steps'      | Number of recipe steps (numerical)                                                                   |
+| 'n_ingredients'| Number of recipe ingredients (numerical)                                                             |
+| 'description'  | User-provided description (use for TFIDF)                                                            |
+| 'rating'       | Rating given (target y)                                                                              |
+| 'review'       | Review text (use for pool of words)                                                                  |
+| 'recipe_date'  | Date recipe was submitted                                                                            |
+
+### Data set shape
+- **For missingness mechanism**: after transformation and grouping by `recipe_id`, the data frame have 83781 rows and 22 columns.
+- **For modelig**: after transformation, we will be working with a data frame with 234429 rows and 23 columns (full df without grouping by).
 
 # Data Cleaning, Transformation, and EDA
 [Back to Catalog](#content-for-this-project)
