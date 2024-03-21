@@ -108,11 +108,11 @@ Some essential we will be working with is listed below with description of each 
 | 'name'         | Recipe name (as index)                                                                               |
 | 'minutes'      | Minutes to prepare recipe                                                                            |
 | 'tags'         | Food.com tags for recipe in a list of string format                                                  |
-| 'calories'     | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
-| 'total fat'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
-| 'sugar'        | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
-| 'sodium'       | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
-| 'protein'      | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| 'calories'     | Nutrition information of calories (numerical)                                                        |
+| 'total fat'    | Nutrition information of fat quantity (numerical)                                                    |
+| 'sugar'        | Nutrition information of sugar (numerical)                                                           |
+| 'sodium'       | Nutrition information of sodium (numerical)                                                          |
+| 'protein'      | Nutrition information of protein (numerical)                                                         |
 | 'n_steps'      | Number of recipe steps (numerical)                                                                   |
 | 'n_ingredients'| Number of recipe ingredients (numerical)                                                             |
 | 'description'  | User-provided description (use for TFIDF)                                                            |
