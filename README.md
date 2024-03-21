@@ -105,20 +105,20 @@ Some essential we will be working with is listed below with description of each 
 
 | Column         | Description                                                                                          |
 |----------------|------------------------------------------------------------------------------------------------------|
-| 'name'         | Recipe name (as index)                                                                               |
-| 'minutes'      | Minutes to prepare recipe                                                                            |
-| 'tags'         | Food.com tags for recipe in a list of string format                                                  |
-| 'calories'     | Nutrition information of calories (numerical)                                                        |
-| 'total fat'    | Nutrition information of fat quantity (numerical)                                                    |
-| 'sugar'        | Nutrition information of sugar (numerical)                                                           |
-| 'sodium'       | Nutrition information of sodium (numerical)                                                          |
-| 'protein'      | Nutrition information of protein (numerical)                                                         |
-| 'n_steps'      | Number of recipe steps (numerical)                                                                   |
-| 'n_ingredients'| Number of recipe ingredients (numerical)                                                             |
-| 'description'  | User-provided description (use for TFIDF)                                                            |
-| 'rating'       | Rating given (target y)                                                                              |
-| 'review'       | Review text (use for pool of words)                                                                  |
-| 'recipe_date'  | Date recipe was submitted                                                                            |
+| `name`         | Recipe name (as index)                                                                               |
+| `minutes`      | Minutes to prepare recipe                                                                            |
+| `tags`         | Food.com tags for recipe in a list of string format                                                  |
+| `calories`     | Nutrition information of calories (numerical)                                                        |
+| `total fat`    | Nutrition information of fat quantity (numerical)                                                    |
+| `sugar`        | Nutrition information of sugar (numerical)                                                           |
+| `sodium`       | Nutrition information of sodium (numerical)                                                          |
+| `protein`      | Nutrition information of protein (numerical)                                                         |
+| `n_steps`      | Number of recipe steps (numerical)                                                                   |
+| `n_ingredients`| Number of recipe ingredients (numerical)                                                             |
+| `description`  | User-provided description (use for TFIDF)                                                            |
+| `rating`       | Rating given (target y)                                                                              |
+| `review`       | Review text (use for pool of words)                                                                  |
+| `recipe_date`  | Date recipe was submitted                                                                            |
 
 ### Data set shape
 - **For missingness mechanism**: after transformation and grouping by `recipe_id`, the data frame have 83781 rows and 22 columns.
