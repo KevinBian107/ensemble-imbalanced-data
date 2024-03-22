@@ -9,7 +9,8 @@ Reading Time: *20 minutes*
   - [Data Set Description](#data-set-description)
 2. [Explorative Data Analysis](#explorative-data-analysis)
     - [Data Cleaning](#data-cleaning)
-    - [Univariate & Bivariate Analysis](#univariate--bivariate-analysis)
+    - [Univariate Analysis](#univariate--bivariate-analysis)
+    - [Bivariate Analysis](#bivariate-analysis)
     - [Aggreagted Analysis](#aggreagted-analysis)
     - [Textual Feature Analysis](#textual-feature-analysis)
 3. [Assessment of Missingness Mechanism](#assessment-of-missingness-mechanism)
@@ -168,15 +169,18 @@ Looks like that our data have a lot of outliers! Especially looking at the diffe
 
 We also used a violin plot to visualize the univariate distribution of these three columns and we observe the same trend of outliers.
 
-## Univariate & Bivariate Analysis
-We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
+## Univariate Analysis
+We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution.
 
 <iframe
   src="assets/eda2.html"
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-Looks like the data are kind of imbalanced in `rating` (at this point, we thought that this wouldn't effect our modle too much, but it turns out later to be one of the main challenge that we need to deal with during the moeling phase).
+Seems like the data are imbalanced in `rating` in nature, we will cover more of the strategy on handling this data during the modeling section.
+
+## Bivariate Analysis
+Next, we will try to observe some bi/tri variate relationships in some numerical columns.
 
 <iframe
   src="assets/eda3.html"
