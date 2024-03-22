@@ -322,7 +322,8 @@ Now we want to perform permutation testing with each of the continuous variable 
 Seems like `n_ingredients` p value passes the threshold of p=0.05!
 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories`.
-- The distribution of `n_ingredients` when `description` is missing is different from the distribution of `n_ingredients` when `description` is not missing.
+
+**The distribution of `n_ingredients` when `description` is missing is different from the distribution of `n_ingredients` when `description` is not missing.**
 
 # Permutation using TF-IDF
 [Back to Catalog](#content-for-this-project)
