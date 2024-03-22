@@ -369,13 +369,15 @@ The result is significant! **We reject the null hypothesis that ther is no diffe
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
 
+## Our question:
 From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to recommender system.
 
 Specifically, we want to make a **multi-class classifier** to predict `rating` (5 catagories) as the **response (y) variable** in the original data frame to demonstarte robust understanding of user preference since `rating` is the most naive and direct approach in seeing user preferences.
 
-In this section we will be using the original big DataFrame for predicting `rating`.
-
 In particular, we care the most about the **Recall** of the model as it is the proportion of true positive predicted among all true positive in nature. However, we will also look at other metrics including accuracy, precision, F1 score, and ROC_AUC.
+
+## At the time of making prediction:
+In this section we will be using the original big DataFrame for predicting `rating`. We are using features including catagorical columns such as `name`, `tags` and `desciprtions`, and numerical columns such as `calories`, `total_fat`, `sugar`, `n_steps`, `n_ingredients`, `minutes`, `sodium`, and `recipe_date`. The above columns are all available at the time of the prediction. We are using these features because of their correlation with the response variable (more specific reasoning will be justified later). We are also using a quite contravercial column (`review`) which seems to be not presented at the time of prediction, however, we will justify the reaosn of using it latrer on in the modeling phase.
 
 # Random Forest Algorithm
 In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
@@ -406,6 +408,11 @@ base_df = (step0
            .pipe(outlier)
            )[['n_ingredients','minutes','n_steps','description','sugar','calories','sodium','total_fat','rating','tags','name','recipe_date','review']]
 ```
+
+Again, we are using a diverse features from continuous and discrete varaibles, including:
+- **Catagorical Discrete Nominal** columns such as `name`, `tags`, `desciprtions` and `reviews`.
+- **Continous Numerical** columns such as `calories`, `total_fat`, `sugar`, `n_steps`, `n_ingredients`, `minutes`, `sodium`, and `recipe_date`.
+- We do not have any **Catagorical Discrete Ordinal** columns.
 
 ### Special Considerations:
 1. We created two additional features of `is_low` and `is_good`, which will be use for later for creating pool of text. We have conider the problem of ptential **data leakage**. However, this creation is prior to train/val/test split and the test data (not being used for fit) would still have these 2 columns but it would not be used to predict the `rating`. Thus, this wouldn't constitute the issue of data leakage as this pool of text is only created and fitted using training data.
@@ -489,13 +496,13 @@ The previous features are carried over to this model, which includes:
 4. normalized `minutes` with respects to binarized `n_ingredients`
 5. simple counts of `tags` column, showing how many tags are in each `tag` column
 
-In addition, awe also added afew more features to capture the relationship we saw from EDA, whcih includes:
+In addition, we also added a few more features to capture the relationship we saw from EDA, whcih includes:
 
 ### RobustScaler With Numerical Features
-Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`
+Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`. They are suitable for predictive task because from previously EDA it seems like that these numerical columns are some what correlated with the `rating` column.
 
 ### TFIDF Analysis
-Two TF-IDF that have been one hot encoded:
+We have also added two TF-IDF that have been one hot encoded from the `description` and `name` catagorical columns since we think that texts do represent ones' preferences towards certain recipe.
 - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF).
 - We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
 - Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words.
