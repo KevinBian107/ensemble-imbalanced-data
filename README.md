@@ -148,13 +148,13 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 
 *Note: since the `recipe_name` is not unique, just taking the top 5 rows have repetitive rows, which is not representative of the data set. Thus we sampled 5 rows randomly of our data set*
 
-| name                                  |   n_steps | tags                                                                                                                                                                                                                                                                                                                                                                                                       |   calories |   sugar |
-|:--------------------------------------|----------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------:|--------:|
-| oriental ramen broccoli coleslaw      |         7 | ['15-minutes-or-less', 'time-to-make', 'course', 'cuisine', 'preparation', 'salads', 'side-dishes', 'asian', 'no-cook', 'presentation', 'served-cold', 'technique']                                                                                                                                                                                                                                        |      506.1 |      56 |
-| sourdough pumpernickel                |        20 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'sourdough', 'breads', 'grains', 'yeast', 'pasta-rice-and-grains', 'number-of-servings', '4-hours-or-less']                                                                                                                                                                                                               |       82.2 |       7 |
-| zippy grilled cheese   bacon sandwich |         4 | ['bacon', '15-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'for-1-or-2', '5-ingredients-or-less', 'lunch', 'eggs-dairy', 'pork', 'easy', 'beginner-cook', 'kid-friendly', 'cheese', 'stove-top', 'dietary', 'sandwiches', 'comfort-food', 'meat', 'taste-mood', 'equipment', 'number-of-servings', 'presentation', 'served-hot'] |      481.4 |       8 |
-| peanut butter logs                    |         5 | ['15-minutes-or-less', 'time-to-make', 'course', 'preparation', 'desserts', 'easy', 'no-cook', 'cookies-and-brownies', 'bar-cookies', 'dietary', 'high-calcium', 'high-in-something', 'technique']                                                                                                                                                                                                         |     1908.7 |     801 |
-| ranch and avocado pasta salad         |         5 | ['30-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'lunch', 'salads', 'side-dishes', 'pasta', 'american', 'easy', 'beginner-cook', 'potluck', 'kid-friendly', 'picnic', 'dietary', 'pasta-rice-and-grains', 'to-go']                                                                                                              |      465.6 |      13 |
+| name                                                |   n_steps | tags                                                                                                                                                                                                                                                                                                                                     |   calories |
+|-----------------------------------------------------|-----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| chicken reuben  5 points                            |        19 | ['15-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'lunch', 'poultry', 'easy', 'chicken', 'sandwiches', 'meat', 'chicken-breasts']                                                                                                                                                                       |      285.7 |
+| copy cat panera cream of chicken and wild rice soup |        20 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'soups-stews', 'poultry', 'rice', 'american', 'fall', 'winter', 'chowders', 'chicken', 'seasonal', 'comfort-food', 'meat', 'chicken-breasts', 'pasta-rice-and-grains', 'long-grain-rice', 'taste-mood']      |      578.6 |
+| super garden harvest soup                           |         7 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'low-protein', 'healthy', 'soups-stews', 'vegetables', 'easy', 'beginner-cook', 'low-fat', 'dietary', 'low-sodium', 'low-cholesterol', 'low-saturated-fat', 'low-calorie', 'low-carb', 'healthy-2', 'low-in-something', 'presentation', 'served-hot'] |      130.8 |
+| ww tomato salad with red onion and basil 2 points   |         5 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'salads', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'tomatoes', '4-hours-or-less']                                                                                                                                                                              |       78.7 |
+| nif s beach house potato pancakes                   |        11 | ['30-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'appetizers', 'side-dishes', 'potatoes', 'vegetables', 'easy', 'kid-friendly', 'dietary']                                                                                                                                                             |      115.8 |
 
 ### Outlier filtering with `outlier()`
 We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
@@ -644,6 +644,8 @@ Let's formalize the test result by using the `classification_report` function fr
     2. one is `weighted_avg`, which re-evaluate the accuracy of our modle based on the data distribution of the data set, whcih provide a better representation of the model's performance given imbalanced data like this one.
 - The support here refers to the same as count in the previous table.
 
+**For the Final Model:**
+
 |    | precision | recall | f1-score | support |
 |----|-----------|--------|----------|---------|
 | 1.0 |    0.10   |  0.30  |   0.15   |   447   |
@@ -659,6 +661,8 @@ Let's formalize the test result by using the `classification_report` function fr
 <br>
 
 After the weighted_avg evaluation, it looks like our model achieves a pretty good performance, 3 of them (precision, recall, and f1 score) all being **70%**! This is quite good considering we are doing a multi class classification, for comparison, we can intoduce the uniformaly dummy clasfier to make a baseline comparison.
+
+**For the dummy classifier:**
 
 |    | precision | recall | f1-score | support |
 |----|-----------|--------|----------|---------|
@@ -676,7 +680,7 @@ After the weighted_avg evaluation, it looks like our model achieves a pretty goo
 
 Clearly, there is a difference in the recall and f1 score. There isn't that big of a differences in precision for the weighted avg because the number of 5 rating are plenty in the data set (77%), causing the precision for 5 to reach 77% directly.
 
-Comparing with our baseline model:
+**Comparing with our baseline model:**
 
 |       | precision | recall | f1-score | support |
 |-------|-----------|--------|----------|---------|
