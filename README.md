@@ -345,9 +345,9 @@ We will be using the `TfidfVectorizer` package from `sk_learn` to help our calcu
 
 ### Differences in Max for TF-IDF
 We want to see whether the distibution of `high_rated` recipes and the distribution of `low_rated` recipes actually come from the same distribution. Thus, we will be performing a **permutation test** here with the following hypothesis:
-- **Null hypothesis**: There **are no** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
-- **Alternative hypothesis**: There **are** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
-- We decide to use a testing threshold of p=0.05
+- **Null Hypothesis**: There **are no** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
+- **Alternative Hypothesis**: There **are** differences in the distribution for the `high_rated` recipes and low_rated` recipes.
+- **Testing Significant Level**: p = 0.05
 
 As for the **test statistics**, we actually have many options, but they all circles around the **differences** of something, we will go through each of them and discuss their cons and pros:
 - Using `sum` -> longer sentences have greater sum
@@ -364,14 +364,18 @@ With all these considerations, we pick our test statistics to be **differences i
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-The result is significant! **We reject the null hypothesis that ther is no differences in the distribution for high rceipe rating data set and low rating recipe data set [p < 0.05].** There seems to be a difference in the distribution for `high_rated` recipes and `low_rated` recipes, at least when we are examining through the scope of Max TF-IDF.
+The result is significant! **We reject the null hypothesis that ther is no differences in the distribution for high rceipe rating data set and low rating recipe data set [p = 0.00].** There seems to be a difference in the distribution for `high_rated` recipes and `low_rated` recipes, at least when we are examining through the scope of Max TF-IDF.
 
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
 
 From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to recommender system.
 
-Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
+Specifically, we want to make a **multi-class classifier** to predict `rating` (5 catagories) as the **response (y) variable** in the original data frame to demonstarte robust understanding of user preference since `rating` is the most naive and direct approach in seeing user preferences.
+
+In this section we will be using the original big DataFrame for predicting `rating`.
+
+In particular, we care the most about the **Recall** of the model as it is the proportion of true positive predicted among all true positive in nature. However, we will also look at other metrics including accuracy, precision, F1 score, and ROC_AUC.
 
 # Random Forest Algorithm
 In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
