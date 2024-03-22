@@ -7,8 +7,8 @@ Reading Time: *20 minutes*
 # Content for this Project
 1. [Introduction](#introduction)
   - [Data Set Description](#data-set-description)
-2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
-    - [Merging & Transformation](#merging--transformation)
+2. [Explorative Data Analysis](#explorative-data-analysis)
+    - [Data Cleaning](#data-cleaning)
     - [Univariate & Bivariate Analysis](#univariate--bivariate-analysis)
     - [Aggreagted Analysis](#aggreagted-analysis)
     - [Textual Feature Analysis](#textual-feature-analysis)
@@ -106,10 +106,10 @@ Some essential we will be working with is listed below with description of each 
 - **For missingness mechanism**: after transformation and grouping by `recipe_id`, the data frame have 83781 rows and 22 columns.
 - **For modelig**: after transformation, we will be working with a data frame with 234429 rows and 23 columns (full df without grouping by).
 
-# Data Cleaning, Transformation, and EDA
+# Explorative Data Analysis
 [Back to Catalog](#content-for-this-project)
 
-## Merging & Transformation
+## Data Cleaning
 Initial merging is needed for the two dataset (`interaction` and `recipe`) to form one big data set. We performed a series of merging as follows:
 
 ### Merging and `initial()` function
