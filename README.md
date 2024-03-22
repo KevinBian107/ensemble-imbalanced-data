@@ -512,17 +512,17 @@ We have also added two TF-IDF that have been one hot encoded from the `descripti
     - However, the performance didn't perform as well as argmax, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word).
 
 ### Recipe Date
-The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well.
+The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well since we think that the time of the recipe may influence user's preference towards it.
 
 ### PCA on Tag
-At last, we also used the `tag` column of each of the sentence to perform one hot encoding.
+At last, we also used the `tag` column of each of the sentence to perform one hot encoding for the `tags` column for the same reason as the TFIDF analysis:
 - We first performed one hot encoding to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**.
 - Thus we filtered out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features.
 - At last, we conducted pca to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
 - The `tag_ohe_pca(df)` function takes care of this step.
 
 ### Naive Sentiment Analysis
-Some words impact strong sense of emotions, using simple sentiment analysis through checking words from "pool of words" we can analyze whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function.
+Some words impact strong sense of emotions, using simple sentiment analysis through checking words from "pool of words" we can analyze whether the `review` columns contain certain sentiment words in it, evaluated by the `is_sentiment(df)` function. This is also down for th  reason similar to TFIDF analysis and PCA on tags.
 
 ### Irrelevant Feature Handling
 We have taken out irrelevant features such as the naive_bayes encoder taht we have implemented.
