@@ -721,6 +721,7 @@ We have a pretty good model so now we want to evaluate whether our model is **fa
 We run a permutation test to see if the difference in accuracy is significant.
 - **Null Hypothesis**: The classifier's accuracy **is the same** for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
 - **Alternative Hypothesis**: The classifier's accuracy **is higher** for `recipes` with non vegan + vegetarian tags.
+- **Quantitative Attribute**: Accuracy
 - **Test Statistic**: Difference in accuracy (is_in - not_in)
 - **Significance Level**: p value of 0.05
 
