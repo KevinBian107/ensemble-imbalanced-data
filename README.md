@@ -156,6 +156,7 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 | ww tomato salad with red onion and basil 2 points   |         5 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'salads', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'tomatoes', '4-hours-or-less']                                                                                                                                                                              |       78.7 |
 | nif s beach house potato pancakes                   |        11 | ['30-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'appetizers', 'side-dishes', 'potatoes', 'vegetables', 'easy', 'kid-friendly', 'dietary']                                                                                                                                                             |      115.8 |
 
+
 ### Outlier filtering with `outlier()`
 We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
 
