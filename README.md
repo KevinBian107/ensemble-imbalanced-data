@@ -16,7 +16,7 @@ Reading Time: *20 minutes*
 3. [Assessment of Missingness Mechanism](#assessment-of-missingness-mechanism)
     - [NMAR Analysis](#nmar-analysis)
     - [Missing Dependency (MAR) Analysis](#missing-dependency-mar-analysis)
-4. [Permutation Testing of TF-IDF](#permutation-using-tf-idf)
+4. [Permutation Testing Using TF-IDF](#permutation-testing-using-tf-idf)
 5. [Framing a Predictive Question](#framing-a-predictive-question)
 6. [Random Forest Algorithm](#random-forest-algorithm)
 7. [Baseline Model: An Naive Approach](#baseline-model-an-naive-approach)
@@ -308,6 +308,9 @@ Then we can check the `n_ingredients` column:
 
 ### Permutation Testing Using K-S Statistics
 Now we want to perform permutation testing with each of the continuous variable within the data set (assuming that the missingness of `description` depends on them) and plot the distribution. Also, we decide to use a testing threshold of p=0.05.
+- **Null Hypothesis**: The distribution of `n_ingredients` when `description` is missing **is the same** from the distribution of `n_ingredients` when `description` is not missing.
+- **Alternative Hypothesis**: The distribution of `n_ingredients` when `description` is missing **is different** from the distribution of `n_ingredients` when `description` is not missing.
+- **Test Statistics**: K-S Statistics
 
 <iframe
   src="assets/missing_permutation_calories.html"
@@ -323,9 +326,9 @@ Seems like `n_ingredients` p value passes the threshold of p=0.05!
 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories`.
 
-**The distribution of `n_ingredients` when `description` is missing is different from the distribution of `n_ingredients` when `description` is not missing.**
+**We reject the null hypothesis [p<0.05]. The distribution of `n_ingredients` when `description` is missing is different from the distribution of `n_ingredients` when `description` is not missing.**
 
-# Permutation using TF-IDF
+# Permutation Testing Using TF-IDF
 [Back to Catalog](#content-for-this-project)
 
 For this section, we will be working with the same data frame that was used in the missingness mechanism section, so a data frame that is grouped by `recipe_id`.
