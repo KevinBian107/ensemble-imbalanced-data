@@ -8,7 +8,7 @@ Reading Time: *20 minutes*
 1. [Introduction](#introduction)
   - [Data Set Description](#data-set-description)
 2. [Explorative Data Analysis](#explorative-data-analysis)
-    - [Data Cleaning](#data-cleaning)
+    - [Data Cleaning with `initial()` & `transform()`](#data-cleaning)
     - [Univariate Analysis](#univariate--bivariate-analysis)
     - [Bivariate Analysis](#bivariate-analysis)
     - [Aggreagted Analysis using `group_user()` & `group_recipe()`](#aggreagted-analysis-using-group_user--group_recipe)
