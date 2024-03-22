@@ -147,17 +147,9 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 
 *Note: since the `recipe_name` is not unique, just taking the top 5 rows have repetitive rows, which is not representative of the data set. Thus we sampled 5 rows randomly of our data set*
 
-| name                                                    |   minutes |   n_ingredients |   n_steps |   calories |   sugar |   total_fat |   carbs |   protein |
-|:--------------------------------------------------------|----------:|----------------:|----------:|-----------:|--------:|------------:|--------:|----------:|
-| great granny s banana bread                             |       135 |              11 |         6 |      191.6 |      52 |          14 |       8 |         5 |
-| olive rice                                              |        25 |               9 |         4 |      347.4 |       0 |          21 |      16 |         9 |
-| scalloped tomatoes  barefoot contessa                   |        55 |               9 |        11 |      376.8 |      39 |          39 |       8 |        28 |
-| not your ordinary chocolate chip cookies  liqueur laced |        46 |              13 |        10 |      383.4 |     112 |          35 |      13 |         8 |
-| blt ranch salad pizza   pampered chef                   |        60 |              10 |         7 |      158.9 |       6 |          23 |       0 |         6 |
 
-
-## Univariate & Bivariate Analysis
-We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns. We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
+### Outlier filtering with `outlier()`
+We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
 
 |       |      sodium |   calories |         minutes |
 |-------|-------------|------------|-----------------|
@@ -175,6 +167,9 @@ We will be performing some **Explorative Data Analysis** on our `recipe` data se
 Looks like that our data have a lot of outliers! Especially looking at the differences between the max value and the mean value for all three columns. We might want to write a function to deal with that. Here we are writing the function `outlier()` where we removed outliers that is below the 0.01 quantile or above the 0.99 quantile, which will be used quite often later on. Due to the messyness of real world data, this isn't exactly enough to remove all the outliers, but this should be good enough to remove some really extreme ones.
 
 We also used a violin plot to visualize the univariate distribution of these three columns and we observe the same trend of outliers.
+
+## Univariate & Bivariate Analysis
+We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns.
 
 <iframe
   src="assets/eda2.html"
