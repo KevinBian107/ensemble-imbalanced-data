@@ -37,13 +37,13 @@ Reading Time: *20 minutes*
 # Introduction
 [Back to Catalog](#content-for-this-project)
 
-This project demonstrate how we may draw insights from a highly unbalanced data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a reconmander system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
+This project demonstrate how we may draw insights from a highly imbalance data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a recommender system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
 
-We are particularly interesting in predicting user preference (`raing` columns as target) using multiple numerical features and textual feature transformation (tfidf, pca, ...) with a homogenous ensemble learning method (random forest) multi-class classifier.
+We are particularly interesting in predicting user preference (`rating` columns as target) using multiple numerical features and textual feature transformation (tfidf, pca, ...) with a homogenous ensemble learning method (random forest) multi-class classifier.
 
-With the basics from this project moving forward:
-1. We can build reconmander systems that can reconmand better recipes to users to better fit their needs and appetite.
-2. Understand an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
+With the basics from this project moving forward, this project is building a foundation for:
+1. From a **practical perspective**, we can build recommender systems that can recommend better recipes to users to better fit their needs and appetite.
+2. From a **theoritical perspective**, this project provide understanding to an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
 
 ## Random Forest Algorithm
 In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
@@ -64,22 +64,22 @@ A **Random Forest** essentially is when at the splitting point of data to train/
 ## Data Set Description
 We can first look at the data frame that we will be working with in this project:
 
-This is the `rcipe` raw data frame:
+This is the `recipe` raw data frame:
 
 | Column         | Description                                                                                          |
 |----------------|------------------------------------------------------------------------------------------------------|
-| 'name'         | Recipe name                                                                                          |
-| 'id'           | Recipe ID                                                                                            |
-| 'minutes'      | Minutes to prepare recipe                                                                            |
-| 'contributor_id' | User ID who submitted this recipe                                                                  |
-| 'submitted'    | Date recipe was submitted                                                                            |
-| 'tags'         | Food.com tags for recipe                                                                             |
-| 'nutrition'    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
-| 'n_steps'      | Number of steps in recipe                                                                            |
-| 'steps'        | Text for recipe steps, in order                                                                      |
-| 'description'  | User-provided description                                                                            |
-| 'n_steps'      | Number of recipe steps (numerical)                                                                   |
-| 'n_ingredients'| Number of recipe ingredients (numerical)                                                             |
+| `name`         | Recipe name                                                                                          |
+| `id`           | Recipe ID                                                                                            |
+| `minutes`      | Minutes to prepare recipe                                                                            |
+| `contributor_id` | User ID who submitted this recipe                                                                  |
+| `submitted`    | Date recipe was submitted                                                                            |
+| `tags`         | Food.com tags for recipe                                                                             |
+| `nutrition`    | Nutrition information (calories, total fat, sugar, sodium, protein, saturated fat, carbohydrates)    |
+| `n_steps`      | Number of steps in recipe                                                                            |
+| `steps`        | Text for recipe steps, in order                                                                      |
+| `description`  | User-provided description                                                                            |
+| `n_steps`      | Number of recipe steps (numerical)                                                                   |
+| `n_ingredients`| Number of recipe ingredients (numerical)                                                             |
 
 
 <br>
@@ -88,11 +88,11 @@ This is the `interaction` raw data frame:
 
 | Column      | Description         |
 |-------------|---------------------|
-| 'user_id'   | User ID             |
-| 'recipe_id' | Recipe ID           |
-| 'date'      | Date of interaction |
-| 'rating'    | Rating given        |
-| 'review'    | Review text         |
+| `user_id`   | User ID             |
+| `recipe_id` | Recipe ID           |
+| `date`      | Date of interaction |
+| `rating`    | Rating given        |
+| `review`    | Review text         |
 
 <br>
 
@@ -356,12 +356,12 @@ With all these considerations, we pick our test statistics to be **differences i
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-The result is significant! **We reject the null hypothesis with a p value that is lower than 0.05!** There is a difference in the distribution for `high_rated` recipes and `low_rated` recipes.
+The result is significant! **We reject the null hypothesis that ther is no differences in the distribution for high rceipe rating data set and low rating recipe data set [p < 0.05].** There seems to be a difference in the distribution for `high_rated` recipes and `low_rated` recipes, at least when we are examining through the scope of Max TF-IDF.
 
 # Framing a Predictive Question
 [Back to Catalog](#content-for-this-project)
 
-From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to reconmander system.
+From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to recommender system.
 
 Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
 
@@ -541,7 +541,7 @@ We will be conducting some simple evaluation with the model in this section with
 - **Precision for 5**: Out of all 5 we predicted, how many are actually 5 
 - **Recall for 5**: Out of all actual 5, how many did we get right
 
-We care about getting a correct rating for reconmandation, we care about finding **Recall** but still considering precision, accuracy, F1 scores.
+We care about getting a correct rating for recommendation, we care about finding **Recall** but still considering precision, accuracy, F1 scores.
 
 ### Feature Importantness
 We have 60 features in our model with feature 0 and feature 1 having the most effect! these are the 2 argmax TF-IDF encoder that we have implemented, this is consistent with ou previous **permutation testing** that shows the TF-IDF distribution for high_rated and low_rated recipes are different distributions.
