@@ -379,6 +379,10 @@ In particular, we care the most about the **Recall** of the model as it is the p
 ## At the time of making prediction:
 In this section we will be using the original big DataFrame for predicting `rating`. We are using features including catagorical columns such as `name`, `tags` and `desciprtions`, and numerical columns such as `calories`, `total_fat`, `sugar`, `n_steps`, `n_ingredients`, `minutes`, `sodium`, and `recipe_date`. The above columns are all available at the time of the prediction. We are using these features because of their correlation with the response variable (more specific reasoning will be justified later). We are also using a quite contravercial column (`review`) which seems to be not presented at the time of prediction, however, we will justify the reaosn of using it latrer on in the modeling phase.
 
+### Special Considerations:
+1. We created two additional features of `is_low` and `is_good`, which will be use for later for creating pool of text. We have conider the problem of ptential **data leakage**. However, this creation is prior to train/val/test split and the test data (not being used for fit) would still have these 2 columns but it would not be used to predict the `rating`. Thus, this wouldn't constitute the issue of data leakage as this pool of text is only created and fitted using training data.
+2. We included the `review` column as a feature in our data set, which may be introducing **data not available at the time of modeling** as `reviews` doesn't exactly come before `rating` does. However, the data farme we are using does not have one to one mapping between recipe and user, meaning that there may exist many previous ratings and reviews prior to one user giving rating, this makes the available review at the time of modeling rating to be *n-1*. As an naive approach, we would use `reviews` directly.
+
 # Random Forest Algorithm
 In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
 
@@ -413,10 +417,6 @@ Again, we are using a diverse features from continuous and discrete varaibles, i
 - **Catagorical Discrete Nominal** columns such as `name`, `tags`, `desciprtions` and `reviews`.
 - **Continous Numerical** columns such as `calories`, `total_fat`, `sugar`, `n_steps`, `n_ingredients`, `minutes`, `sodium`, and `recipe_date`.
 - We do not have any **Catagorical Discrete Ordinal** columns.
-
-### Special Considerations:
-1. We created two additional features of `is_low` and `is_good`, which will be use for later for creating pool of text. We have conider the problem of ptential **data leakage**. However, this creation is prior to train/val/test split and the test data (not being used for fit) would still have these 2 columns but it would not be used to predict the `rating`. Thus, this wouldn't constitute the issue of data leakage as this pool of text is only created and fitted using training data.
-2. We included the `review` column as a feature in our data set, which may be introducing **data not available at the time of modeling** as `reviews` doesn't exactly come before `rating` does. However, the data farme we are using does not have one to one mapping between recipe and user, meaning that there may exist many previous ratings and reviews prior to one user giving rating, this makes the available review at the time of modeling rating to be *n-1*. As an naive approach, we would use `reviews` directly.
 
 ## Handling Missing Data
 ### Missing Rating
@@ -502,7 +502,7 @@ In addition, we also added a few more features to capture the relationship we sa
 Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`. They are suitable for predictive task because from previously EDA it seems like that these numerical columns are some what correlated with the `rating` column.
 
 ### TFIDF Analysis
-We have also added two TF-IDF that have been one hot encoded from the `description` and `name` catagorical columns since we think that texts do represent ones' preferences towards certain recipe.
+We have also added two TF-IDF that have been one hot encoded from the `description` and `name` catagorical columns since we think that texts may be correlated to users' preferences towards certain recipe (description of certain recipe grabs user's attention).
 - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF).
 - We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
 - Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words.
@@ -512,10 +512,10 @@ We have also added two TF-IDF that have been one hot encoded from the `descripti
     - However, the performance didn't perform as well as argmax, whihch may be due to extra noise added (48% accuracy with 5 words and 50% accuracy with one word).
 
 ### Recipe Date
-The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well since we think that the time of the recipe may influence user's preference towards it.
+The `recipe_dtae` column have also being taken out with only the year of the recipe and then one hot encoded as well since we think that the time of the recipe may influence user's preference towards it (i.e. older recipe may not be viewed as important or as up to date).
 
-### PCA on Tag
-At last, we also used the `tag` column of each of the sentence to perform one hot encoding for the `tags` column for the same reason as the TFIDF analysis:
+### PCA on Tags
+At last, we also used the `tag` column of each of the sentence to perform one hot encoding for the `tags` column for the same reason as the TFIDF analysis, we think that user have certain preference towards specific tags. However, directly OHE all unique tags would result in more than 500 columns, resulting in a **sparse** matrix and effect the eprformance of **non-linear classfier** like random forest. Thus, we will be performing certain transformations as the below:
 - We first performed one hot encoding to transform each tag to a numerical boolean representation. However, this makes the feature space to reahc to about 500 features, which adds too much **sparsity** to the feature space and may introduces **noises**.
 - Thus we filtered out all the **irrelevant** or **low counted** tags (<1000 counts) and reduces teh feature spac  to only adding 80 more features.
 - At last, we conducted pca to reduce the adding feature space to just abou 10 features and this value seems to work well with the data set experimentally.
@@ -676,6 +676,24 @@ After the weighted_avg evaluation, it looks like our model achieves a pretty goo
 
 Clearly, there is a difference in the recall and f1 score. There isn't that big of a differences in precision for the weighted avg because the number of 5 rating are plenty in the data set (77%), causing the precision for 5 to reach 77% directly.
 
+Comparing with our baseline model:
+
+|       | precision | recall | f1-score | support |
+|-------|-----------|--------|----------|---------|
+| 1.0   | 0.00      | 0.00   | 0.00     | 447     |
+| 2.0   | 0.00      | 0.00   | 0.00     | 405     |
+| 3.0   | 0.00      | 0.00   | 0.00     | 1222    |
+| 4.0   | 0.00      | 0.00   | 0.00     | 6380    |
+| 5.0   | 0.77      | 1.00   | 0.87     | 27867   |
+|-----|-----------|--------|----------|---------|
+| accuracy |         |        | 0.77     | 36321   |
+| macro avg | 0.15  | 0.20   | 0.17     | 36321   |
+| weighted avg | 0.59 | 0.77   | 0.67     | 36321   |
+
+<br>
+
+Our final model is a lot better! As it can be seen from the table above, the baseline model is just predicting the `rating` of 5 and neglecting all other ratings, making them having a recall and precision all equals to zero. Though the final weighted data seems to be okay, the baseline model is not a really good classifier.
+
 Next, we want to also look at the `ROC_AUC` score or **area under the receiver operating characteristic curve**. Again, like many metrics, they are originally designed for binary classfications, but we can also apply to multi-class classfications by doing `ovr` strategy (estimating by making grouped for comparison).
 
 <p align="center"><img src="assets/roc.png" alt="tfidf" width="350"/></p>
@@ -690,19 +708,21 @@ Our model's ROC curve is demonstrated as the below:
 
 <p align="center"><img src="assets/roc_curve.svg" alt="tfidf" width="500"/></p>
 
-As demonstarted previously using the ROC AUC socre, our model does a pretty good performance!
+As demonstarted previously using the ROC AUC socre, our model does a pretty good performance and it is performing greatly better than the baseline model on recall, precision, and F1 scores.
 
 # Fairness Analysis
 [Back to Catalog](#content-for-this-project)
 
 We have a pretty good model so now we want to evaluate whether our model is **fair** for treating **all populations**. In particular, we want to check in the scope of looking at the predictions for the vegan group and the vegetarian group. Let's first check how many of them are in the data set.
+- Our X group is non vegan + vegetarian group
+- Our Y group is vegan + vegetarian group
 
 ### Difference Significant?
 We run a permutation test to see if the difference in accuracy is significant.
 - **Null Hypothesis**: The classifier's accuracy **is the same** for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags, and any differences are due to chance.
 - **Alternative Hypothesis**: The classifier's accuracy **is higher** for `recipes` with non vegan + vegetarian tags.
 - **Test Statistic**: Difference in accuracy (is_in - not_in)
-- Significance level: p value of 0.05
+- **Significance Level**: p value of 0.05
 
 <iframe
   src="assets/fairness.html"
