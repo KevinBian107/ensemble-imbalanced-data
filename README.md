@@ -11,11 +11,11 @@ Reading Time: *20 minutes*
     - [Data Cleaning](#data-cleaning)
     - [Univariate Analysis](#univariate--bivariate-analysis)
     - [Bivariate Analysis](#bivariate-analysis)
-    - [Aggreagted Analysis](#aggreagted-analysis)
+    - [Aggreagted Analysis using `group_user()` & `group_recipe()`](#aggreagted-analysis-using-group_user--group_recipe)
     - [Textual Feature Analysis](#textual-feature-analysis)
 3. [Assessment of Missingness Mechanism](#assessment-of-missingness-mechanism)
-    - [MAR Anlaysis](#mar-anlaysis)
     - [NMAR Analysis](#nmar-analysis)
+    - [Missing Dependency (MAR) Analysis](#missing-dependency-mar-analysis)
 4. [Permutation Testing of TF-IDF](#permutation-using-tf-idf)
 5. [Framing a Predictive Question](#framing-a-predictive-question)
 6. [Random Forest Algorithm](#random-forest-algorithm)
@@ -148,6 +148,13 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 
 *Note: since the `recipe_name` is not unique, just taking the top 5 rows have repetitive rows, which is not representative of the data set. Thus we sampled 5 rows randomly of our data set*
 
+| name                                  |   n_steps | tags                                                                                                                                                                                                                                                                                                                                                                                                       |   calories |   sugar |
+|:--------------------------------------|----------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------:|--------:|
+| oriental ramen broccoli coleslaw      |         7 | ['15-minutes-or-less', 'time-to-make', 'course', 'cuisine', 'preparation', 'salads', 'side-dishes', 'asian', 'no-cook', 'presentation', 'served-cold', 'technique']                                                                                                                                                                                                                                        |      506.1 |      56 |
+| sourdough pumpernickel                |        20 | ['time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'sourdough', 'breads', 'grains', 'yeast', 'pasta-rice-and-grains', 'number-of-servings', '4-hours-or-less']                                                                                                                                                                                                               |       82.2 |       7 |
+| zippy grilled cheese   bacon sandwich |         4 | ['bacon', '15-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'for-1-or-2', '5-ingredients-or-less', 'lunch', 'eggs-dairy', 'pork', 'easy', 'beginner-cook', 'kid-friendly', 'cheese', 'stove-top', 'dietary', 'sandwiches', 'comfort-food', 'meat', 'taste-mood', 'equipment', 'number-of-servings', 'presentation', 'served-hot'] |      481.4 |       8 |
+| peanut butter logs                    |         5 | ['15-minutes-or-less', 'time-to-make', 'course', 'preparation', 'desserts', 'easy', 'no-cook', 'cookies-and-brownies', 'bar-cookies', 'dietary', 'high-calcium', 'high-in-something', 'technique']                                                                                                                                                                                                         |     1908.7 |     801 |
+| ranch and avocado pasta salad         |         5 | ['30-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'cuisine', 'preparation', 'occasion', 'north-american', 'lunch', 'salads', 'side-dishes', 'pasta', 'american', 'easy', 'beginner-cook', 'potluck', 'kid-friendly', 'picnic', 'dietary', 'pasta-rice-and-grains', 'to-go']                                                                                                              |      465.6 |      13 |
 
 ### Outlier filtering with `outlier()`
 We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
@@ -205,8 +212,20 @@ It also seems like more `sugar` and more `total_fat` (transformed from `nutritio
 
 Seems like there is some sort of relationships between `n_steps`, `n_ingredients`, and the `rating` column. However, this relationship doesn't seem to be that exact. In a later section we might use this idea.
 
-## Aggreagted Analysis
+## Aggreagted Analysis using `group_user()` & `group_recipe()`
 We have implemented a few groupby function previously that groups the data frame by `user_id` and by `recipe_id` then handle each of the column picked accordinly. Now we can first use the groupby functions that we have implemented to look at some aggregated data first before using it for the next few sections.
+
+We can look at a sample data frame of grouping  by `recipe_id`:
+
+|   recipe_id |   minutes |   n_steps |   calories |   sugar |
+|------------:|----------:|----------:|-----------:|--------:|
+|      319511 |         1 |         4 |       15.2 |      10 |
+|      386562 |         9 |        11 |      265   |       5 |
+|      388318 |        55 |        10 |      149.6 |       2 |
+|      324162 |        20 |         5 |      470.5 |       2 |
+|      442533 |        40 |        16 |      210.7 |      40 |
+
+</br>
 
 <iframe
   src="assets/eda6.html"
@@ -220,7 +239,7 @@ Looking at the right column of graph, it seems like the previous relationships t
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-When aggregating by user, something interesting appears, it seems like that `rating` column is not so much correlated with the `n_ingrredients` column though it is still quite correlated with the `calories` column. **Though we will not be working with this version of the aggregated data frame firectly when we are making our predictive model, this ideas may be taken into considerations when choosing features.**
+When aggregating by user, something interesting appears, it seems like that `rating` column is not so much correlated with the `n_ingrredients` column though it is still quite correlated with the `calories` column. **This is significant finding, though we will not be working with this version of the aggregated data frame firectly when we are making our predictive model, this ideas may be taken into considerations when choosing features.**
 
 ## Textual Feature Analysis
 We actually made more edas and feature engineering with **textual features**, but we will introduce those later in the section as it is much more relevant to our modeling process. For now, we will show some technique with TF-IDF that we will use later on in this project by checking the top 5 **most important** words in each of the rows (recipe_id) in the **original cleaned** data frame filtered by getting only the **5 rating recipes**(note, recipe_id is not unique here).
@@ -268,7 +287,7 @@ However, on the other hand, the `rating` column seems to be **Not Missing At Ran
 
 One interesting one to analyze is `description`, because it is hard to say directly how it may be correlated to any other columns in this data set, we suspect it to be **MAR**, but we will prove it to be **MAR** in the next section.
 
-## MAR Anlaysis
+## Missing Dependency (MAR) Analysis
 ### Decision Rule for Missing Description
 Let's assume that the missingess of `description` column is related to the 2 columns here (`n_ingredients` and `calories`) since these 2 continuous columns seems to be an common factor that might cause the missing of description (too high calories? Or too many ingredients?). However, these are only some hypothesis, we need to actually try to reject or fail to reject them. We assume that the missingness for `description` wouldn't depend on discrete columns.
 
@@ -303,6 +322,7 @@ Now we want to perform permutation testing with each of the continuous variable 
 Seems like `n_ingredients` p value passes the threshold of p=0.05!
 
 From what the plot have suggest, it seems like missingess for `description` is related to `n_ingredients` and it seems like missingness in `description` is not related to `calories`.
+- The distribution of `n_ingredients` when `description` is missing is different from the distribution of `n_ingredients` when `description` is not missing.
 
 # Permutation using TF-IDF
 [Back to Catalog](#content-for-this-project)
