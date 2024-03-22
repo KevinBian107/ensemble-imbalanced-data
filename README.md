@@ -503,7 +503,7 @@ In addition, we also added a few more features to capture the relationship we sa
 Some numerical columns of `sugar`,`sodium`,`calories`,`total_fat` that have being standerlized using `RobustScaler`. They are suitable for predictive task because from previously EDA it seems like that these numerical columns are some what correlated with the `rating` column.
 
 ### TFIDF Analysis
-We have also added two TF-IDF that have been one hot encoded from the `description` and `name` catagorical columns since we think that texts may be correlated to users' preferences towards certain recipe (description of certain recipe grabs user's attention).
+We have also added two TF-IDF that have been one hot encoded from the `description` and `name` catagorical columns since we think that texts may be correlated to users' preferences towards certain recipe (description of certain recipe grabs user's attention). We have also shown in the TFIDF permutation testing section that from the test statistics of Max TFIDF differences, high rating recipe and low rating recipe seems to have different distributions.
 - In particular, the naive approach is to use the highest TF-IDF for each of the words are extracted for each of the sentence using argmax, representing the most important words in a sentence (we are using argmax here is for considering the complexity of this model, later implementations can utilzie more words that have high TF-IDF).
 - We then construct a pool of highest TF-IDF words in the **low** `rating` dataset, which was originally defined as `rating` lower than or equal to 3 and it is stored as a boolean indicator in the `is_low` column.
 - Finally, we want to see whether or not the current sentence's highest TF-IDF word is in such pool of words.
@@ -742,6 +742,8 @@ This result is **significant with [P < 0.05]**, we failed to reject the null hyp
 2. Similar approach on tackling imbalanced data issue from this [UCB Paper](https://statistics.berkeley.edu/sites/default/files/tech-reports/666.pdf)
 
 ## More Questions?
+[Back to Catalog](#content-for-this-project)
+
 If you have more questions, all the code that made this predictive model and the analysis is all in the developer repository that is open sourced on GitHub:
 
 <a href="https://github.com/KevinBian107/ensemble_imbalance_data" style="background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 16px;">Visit Developer Repository</a>
