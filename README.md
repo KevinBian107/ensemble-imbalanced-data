@@ -6,7 +6,6 @@ Reading Time: *20 minutes*
 
 # Content for this Project
 1. [Introduction](#introduction)
-  - [Random Forest Algorithm](#random-forest-algorithm)
   - [Data Set Description](#data-set-description)
 2. [Data Cleaning, Transformation, and EDA](#data-cleaning-transformation-and-eda)
     - [Merging & Transformation](#merging--transformation)
@@ -18,12 +17,13 @@ Reading Time: *20 minutes*
     - [NMAR Analysis](#nmar-analysis)
 4. [Permutation Testing of TF-IDF](#permutation-using-tf-idf)
 5. [Framing a Predictive Question](#framing-a-predictive-question)
-6. [Baseline Model: An Naive Approach](#baseline-model-an-naive-approach)
+6. [Random Forest Algorithm](#random-forest-algorithm)
+7. [Baseline Model: An Naive Approach](#baseline-model-an-naive-approach)
     - [Preprocess Data Set](#preprocess-data-set)
     - [Handling Missingness in Data](#handling-missing-data)
     - [Train/Val/Test Split](#trainvalidatetest-split)
     - [Feature Engineering](#feature-engineering)
-7. [Final Model: Homogenous Ensemble Learning](#final-model-ensemble-learning)
+8. [Final Model: Homogenous Ensemble Learning](#final-model-ensemble-learning)
     - [Feature Engineering: Back to EDA)](#feature-engineering-back-to-eda)
     - [Model Pipeline](#model-pipeline)
     - [Hyperparameter Tuning](#hyperparameter-tuning)
@@ -31,8 +31,8 @@ Reading Time: *20 minutes*
         - [Feature Importantness](#feature-importantness)
         - [Confusion Matrix & Evaluation Metrics](#confusion-matrix--evaluation-metrics)
         - [Testing Set Evaluation](#tetsing-set-evaluation)
-8. [Fairness Analysis](#fairness-analysis)
-9. [References](#references)
+9. [Fairness Analysis](#fairness-analysis)
+10. [References](#references)
 
 # Introduction
 [Back to Catalog](#content-for-this-project)
@@ -44,22 +44,6 @@ We are particularly interesting in predicting user preference (`rating` columns 
 With the basics from this project moving forward, this project is building a foundation for:
 1. From a **practical perspective**, we can build recommender systems that can recommend better recipes to users to better fit their needs and appetite.
 2. From a **theoritical perspective**, this project provide understanding to an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
-
-## Random Forest Algorithm
-In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
-
-A **Decision Tree** essentially learns to come up with questions or decisions at an high dimensional space (depending on the number of features) and then separate the data using "boxes" or "lines" in that way. The core mechanism that allows it to happen is using *entropy minimization* where the model tries to reduce the entropy, or uncertainty of each split, making one catagory fit to one side and the other catagory to the other side.
-
-<p align="center"><img src="assets/eq1.png" alt="random forest classifier" width="300"/></p>
-
-We are taking the negative of such value because log of an proportion (<1) value outputs a negative value. The minimum value that this formula can output is 0, which corresponds to log(1) or when the whole space is just one catagory!
-
-A **Random Forest** essentially is when at the splitting point of data to train/test/val, **a random subset of features** is taken out instead of choosing from all of them and then spliting the tree base on this subset of the feature, usually speaking m = sqrt(d) seems to work well in practice and it is also the default that `sk_learn` uses. **This allows each decision trees to come up with different prediction rules for later on voting an best one**.
-- Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
-- We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
-- Image from [here](https://medium.com/@mrmaster907/introduction-random-forest-classification-by-example-6983d95c7b91)
-
-<p align="center"><img src="assets/rfc_2.webp" alt="random forest classifier" width="700"/></p>
 
 ## Data Set Description
 We can first look at the data frame that we will be working with in this project:
@@ -364,6 +348,22 @@ The result is significant! **We reject the null hypothesis that ther is no diffe
 From the previous section we have learned that Recipe's Max TF-IDF distribution is different for `high_rated` recipe than `low_rated` recipe, so now we want to go a step further: we want to predict `rating` as a classfication problem to demonsrate user preference and as a potential prior to recommender system.
 
 Specifically, **we want to predict `rating` (5 catagories) in the original data frame to demonstarte understanding of user preference.** In this section we will be using the original big DataFrame for predicting `rating`.
+
+# Random Forest Algorithm
+In this project, we will adapt ideas of **homogenous ensemble learning** where we will use multipl **Decision Trees**, and making them into a **Random Forest** for more  robust predictions of the data.
+
+A **Decision Tree** essentially learns to come up with questions or decisions at an high dimensional space (depending on the number of features) and then separate the data using "boxes" or "lines" in that way. The core mechanism that allows it to happen is using *entropy minimization* where the model tries to reduce the entropy, or uncertainty of each split, making one catagory fit to one side and the other catagory to the other side.
+
+<p align="center"><img src="assets/eq1.png" alt="random forest classifier" width="300"/></p>
+
+We are taking the negative of such value because log of an proportion (<1) value outputs a negative value. The minimum value that this formula can output is 0, which corresponds to log(1) or when the whole space is just one catagory!
+
+A **Random Forest** essentially is when at the splitting point of data to train/test/val, **a random subset of features** is taken out instead of choosing from all of them and then spliting the tree base on this subset of the feature, usually speaking m = sqrt(d) seems to work well in practice and it is also the default that `sk_learn` uses. **This allows each decision trees to come up with different prediction rules for later on voting an best one**.
+- Notice that we are not doing simple boostrap of the data as each decision tree may not resemble too great of a difference in that way, instead, we are taking different features directly using the same type of model (decision tree), making it a homogenous ensemble learning method.
+- We want the individual predictors to have low bias, high variance, and be uncorrelated with each other. In this way, when averaging (taking votes) them together, low bias and low variance would occur.
+- Image from [here](https://medium.com/@mrmaster907/introduction-random-forest-classification-by-example-6983d95c7b91)
+
+<p align="center"><img src="assets/rfc_2.webp" alt="random forest classifier" width="700"/></p>
 
 # Baseline Model: An Naive Approach
 [Back to Catalog](#content-for-this-project)
@@ -674,7 +674,7 @@ We run a permutation test to see if the difference in accuracy is significant.
   style="width: 100%; height: 400px; border: none;"
 ></iframe>
 
-This result is **significant with a p vlaue less than 0.05**, we reject the null hypothesis! Seems like our model is prettu robust for the group of vegan + vegetarian.
+This result is **significant with [P < 0.05]**, we failed to reject the null hypothesis that classifier's accuracy is the same for both `recipes` with vegan + vegetarian tags and non vegan + vegetarian tags. Seems like our model is pretty robust for the group of vegan + vegetarian.
 
 # References
 1. Potential alternative approach to solve imbalanced data issue using [Balanced Random Forest](https://imbalanced-learn.org/stable/references/generated/imblearn.ensemble.BalancedRandomForestClassifier.html)
