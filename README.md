@@ -159,8 +159,6 @@ We can take a look at the cleaned data frame (note this is only a part of the ac
 ## Univariate & Bivariate Analysis
 We will be performing some **Explorative Data Analysis** on our `recipe` data set, which includes the removal of outlier, understanding data imbalances in target data `rating`, deternmining threshold point in different univariate distribution, and observing some bi/tri variate relationships in some numerical columns. We can first check some examples from the data frame to understand the distribution of our data (`sodium`, `calories`, and `minutes`).
 
-We also used a violin plot to visualize this reslut previously. However, it takes up too many space to keep this plot on the website (10mb), so we decided to use just a table format.*
-
 |       |      sodium |   calories |         minutes |
 |-------|-------------|------------|-----------------|
 | count | 234429      | 234429     | 234429          |
@@ -175,6 +173,8 @@ We also used a violin plot to visualize this reslut previously. However, it take
 <br>
 
 Looks like that our data have a lot of outliers! Especially looking at the differences between the max value and the mean value for all three columns. We might want to write a function to deal with that. Here we are writing the function `outlier()` where we removed outliers that is below the 0.01 quantile or above the 0.99 quantile, which will be used quite often later on. Due to the messyness of real world data, this isn't exactly enough to remove all the outliers, but this should be good enough to remove some really extreme ones.
+
+We also used a violin plot to visualize the univariate distribution of these three columns and we observe the same trend of outliers.
 
 <iframe
   src="assets/eda2.html"
