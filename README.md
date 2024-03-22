@@ -37,16 +37,14 @@ Reading Time: *20 minutes*
 # Introduction
 [Back to Catalog](#content-for-this-project)
 
-This project demonstrate how we may draw insights from a highly imbalance data set using ensemble learning. Predictive model detecting user preference using **textual features** in combnation with other **numerical features** is the key first step prior to building a recommender system or doing any other further analysis. The challenge that is addressed in this project is related to the highly imbalance nature of the `recipe` data set that we are using.
-
-We are particularly interesting in predicting user preference (`rating` columns as target) using multiple numerical features and textual feature transformation (tfidf, pca, ...) with a homogenous ensemble learning method (random forest) multi-class classifier.
+Recipes and ratings play a pivotal role in our everyday lives, influencing various aspects from culinary experiences to social interactions. Predicting users' preferences is particularly crucial as it enables personalized experiences and enhances efficiency in content discovery. In our analysis, we focus on how to predict user preferences based on various numerical and textual features. Our approach involves employing advanced techniques such as TF-IDF transformation, PCA, and a homogenous ensemble learning method, specifically Random Forest, to construct a reliable multi-class classifier with more **robust** and **reliable** predictions even facing imbalanced datasets, ensuring **dependable predictions** in scenarios where data distribution is skewed.
 
 With the basics from this project moving forward, this project is building a foundation for:
-1. From a **practical perspective**, we can build recommender systems that can recommend better recipes to users to better fit their needs and appetite.
-2. From a **theoritical perspective**, this project provide understanding to an potential approach towards solving issues that is relevant with highly imbalanced data, which is quite often in **real word data**.
+1. From a **practical perspective**, we can build recommender systems that can recommend better recipes to users to better fit their needs and appetites with a much more **robust** and **reliable** system no matter how messy the training data is (usual real world data).
+2. From a **theoritical perspective**, this project provide understanding to an potential approach towards solving issues that is relevant to highly imbalanced data, which is quite often in **real-world data**.
 
-## Data Set Description
-We can first look at the data frame that we will be working with in this project:
+## Data Description
+We can first look at the original raw data frame that we will be working with in this project:
 
 This is the `recipe` raw data frame:
 
